@@ -11,6 +11,10 @@ buildscript {
 }
 
 apply plugin: "kotlin" // or apply plugin: "kotlin2js" if targeting JavaScript
+apply plugin: "java"
+apply plugin: "application"
+apply plugin: "idea"
+
 
 repositories {
   mavenCentral()
@@ -21,4 +25,16 @@ repositories {
 
 dependencies {
   compile 'org.jetbrains.kotlin:kotlin-stdlib:0.1-SNAPSHOT'
+  compile 'org.seleniumhq.selenium:selenium-java:2.48.2'
+}
+
+sourceSets {
+  main {
+    kotlin {
+      srcDir 'src/main/kotlin'
+    }
+    resources {
+      srcDir 'src/main/resources'
+    }
+  }
 }
