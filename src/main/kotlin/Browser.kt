@@ -11,8 +11,16 @@ class Browser {
     val pageChangeListeners = LinkedHashSet<String>();
     var reportGroup : String? = null
     var navigatorFactory : NavigatorFactory? = null
+    val augmentedDriver : WebDriver = RemoteDriverOperation(this.javaClass.classLoader).getAugmentedDriver(getDriver())
 
-//     val augmentedDriver : WebDriver = RemoteDriverOperation(this.class.classloader).getAugmentedDriver(driver)
+    /**
+     * The driver implementation used to automate the actual browser.
+     * <p>
+     * The driver implementation to use is determined by the configuration.
+     *
+     * @see geb.Configuration#getDriver()
+     */
+     fun getDriver() : WebDriver  = config.driver
 
 
 }
@@ -172,6 +180,7 @@ class ConfigurationLoader {
 }
 
 class Configuration {
+    val driver : WebDriver by Delegates.notNull<WebDriver>()
 }
 
 
