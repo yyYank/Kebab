@@ -12,12 +12,24 @@ import kotlin.properties.Delegates
  * page instance via {@code propertyMissing ( )} and {@code methodMissing ( )}.
  */
 class Browser {
+    // UTF-8の定数
     val UTF8 = "UTF-8"
+    // コンフィグ
     val config : Configuration by Delegates.notNull<Configuration>()
+    // ページオブジェクト
     val page : Page by Delegates.notNull<Page>()
+    // ページの変化通知リスナ
     val pageChangeListeners = LinkedHashSet<String>();
+    // レポートを書き込むディレクトリパス
     var reportGroup : String? = null
-    var navigatorFactory : NavigatorFactory? = null
+    // ナビゲータのファクトリ。ナビゲータはページのナビゲートをするんだろな
+    var navigatorFactory : NavigatorFactory by Delegates.notNull<NavigatorFactory>()
+
+    /**
+     * If the driver is remote, this object allows access to its capabilities (users of Kebab should not access this object, it is used internally).
+     * リモートドライバの場合はコンフィグからオペレーションを介してドライバの設定をするっぽい
+     */
+    // @Lazy
     val augmentedDriver : WebDriver = RemoteDriverOperation(this.javaClass.classLoader).getAugmentedDriver(getDriver())
 
     /**
@@ -118,7 +130,7 @@ interface FrameSupport {
 
 }
 
-class NavigableSupport(navigatorFactory: NavigatorFactory?) : Navigable {
+class NavigableSupport(navigatorFactory: NavigatorFactory) : Navigable {
 
 }
 
@@ -126,14 +138,19 @@ class DefaultWaitingSupport(config: Configuration) : WaitingSupport {
 
 }
 
-class DefaultPageContentSupport(page: Page, contentTemplates: Any, navigatorFactory: NavigatorFactory?) : PageContentSupport {
+class DefaultPageContentSupport(page: Page, contentTemplates: Any, navigatorFactory: NavigatorFactory) : PageContentSupport {
 
 }
 
-class PageContentTemplateBuilder {
-
+class PageContentTemplateBuilder(val browser : Browser, val container : PageContentContainer, val navigatorFactory : NavigatorFactory) {
+    val templates = HashMap<String, PageContentTemplate>()
     companion object {
-        fun build(browser : Browser, container : PageContentContainer?, navigatorFactory : NavigatorFactory?, property : String, startAt : Class<*>, stopAt : Class<*>  =  Any::class.javaClass) {
+
+        fun build(browser : Browser,
+                  container : PageContentContainer,
+                  navigatorFactory : NavigatorFactory,
+                  property : String, startAt : Class<*>,
+                  stopAt : Class<*>  =  Any::class.javaClass) : HashMap<String, PageContentTemplate> {
 
             if (!stopAt.isAssignableFrom(startAt)) {
                 throw IllegalArgumentException("$startAt is not a subclass of $stopAt")
@@ -142,28 +159,49 @@ class PageContentTemplateBuilder {
             val templatesDefinitions = listOf("1")
             var clazz = startAt
 
-                    while (clazz != stopAt) {
-//                        var templatesDefinition =
-                                //noinspection GroovyUnusedCatchParameter
-//                                try {
-//                                    clazz[property]
-//                                } catch (MissingPropertyException e) {
-//                                    // swallow
-//                                }
-//
-//                        if (templatesDefinition) {
-//                            if (!(templatesDefinition is Closure)) {
-//                                throw IllegalArgumentException("'$property' static property of class $clazz should be a Closure")
-//                            }
-//                            templatesDefinitions << templatesDefinition.clone()
-//                        }
-//
-                        clazz = clazz.superclass
-                    }
+            while (clazz != stopAt) {
+                //                        var templatesDefinition =
+                //noinspection GroovyUnusedCatchParameter
+                //                                try {
+                //                                    clazz[property]
+                //                                } catch (MissingPropertyException e) {
+                //                                    // swallow
+                //                                }
+                //
+                //                        if (templatesDefinition) {
+                //                            if (!(templatesDefinition is Closure)) {
+                //                                throw IllegalArgumentException("'$property' static property of class $clazz should be a Closure")
+                //                            }
+                //                            templatesDefinitions << templatesDefinition.clone()
+                //                        }
+                //
+                clazz = clazz.superclass
+            }
+            return build(browser, container, navigatorFactory, templatesDefinitions)
+        }
 
-            build(browser, container, navigatorFactory, templatesDefinitions.reversed().joinToString {it}, clazz)
+        fun build(browser : Browser,
+                   container : PageContentContainer,
+                   navigatorFactory : NavigatorFactory,
+                   templatesDefinitions : List<Any>)  : HashMap<String, PageContentTemplate> {
+            val builder = PageContentTemplateBuilder(browser, container, navigatorFactory)
+            //        for (templatesDefinition in templatesDefinitions) {
+            //            templatesDefinition.delegate = builder
+            //            templatesDefinition()
+            //        }
+            return builder.templates
         }
     }
+}
+
+class PageContentTemplate {
+    // TODO 定義
+//    val browser : Browser
+//    val owner : PageContentContainer
+//    val name : String
+//    val params : String
+//    val factory : Closure
+//    val navigatorFactory : NavigatorFactory
 }
 
 interface Navigable {
