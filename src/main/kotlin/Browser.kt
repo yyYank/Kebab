@@ -4,6 +4,13 @@ import org.openqa.selenium.WebDriver
 import java.util.*
 import kotlin.properties.Delegates
 
+/**
+ * The browser is the centre of Kebab. It encapsulates a {@link org.openqa.selenium.WebDriver} implementation and references
+ * a {@link kebab.Page} object that provides access to the content.
+ * <p>
+ * Browser objects dynamically delegate all method calls and property read/writes that it doesn't implement to the current
+ * page instance via {@code propertyMissing ( )} and {@code methodMissing ( )}.
+ */
 class Browser {
     val UTF8 = "UTF-8"
     val config : Configuration by Delegates.notNull<Configuration>()
@@ -58,8 +65,15 @@ class Page : Navigatable, PageContainer, Initializable, WatingSupport{
      */
     fun init (browser : Browser ) : Page {
         this.browser = browser
-//        val contentTemplates = PageContentTemplateBuilder.build(browser, this, browser.navigatorFactory, "content", (this.class, Page)
-//        pageContentSupport = DefaultPageContentSupport(this, contentTemplates, browser.navigatorFactory)
+
+        val contentTemplates = PageContentTemplateBuilder.build(
+                browser,
+                this as PageContentContainer,
+                browser.navigatorFactory,
+                "content",
+                this.javaClass
+        )
+        pageContentSupport = DefaultPageContentSupport(this, contentTemplates, browser.navigatorFactory)
         navigableSupport = NavigableSupport(browser.navigatorFactory)
         downloadSupport = DefaultDownloadSupport(browser)
         waitingSupport = DefaultWaitingSupport(browser.config)
@@ -119,7 +133,36 @@ class DefaultPageContentSupport(page: Page, contentTemplates: Any, navigatorFact
 class PageContentTemplateBuilder {
 
     companion object {
-        fun build(browser : Browser, page : Page, navigatorFactory: NavigatorFactory?, type : String, klass : Class<*>) = Any()
+        fun build(browser : Browser, container : PageContentContainer?, navigatorFactory : NavigatorFactory?, property : String, startAt : Class<*>, stopAt : Class<*>  =  Any::class.javaClass) {
+
+            if (!stopAt.isAssignableFrom(startAt)) {
+                throw IllegalArgumentException("$startAt is not a subclass of $stopAt")
+            }
+
+            val templatesDefinitions = listOf("1")
+            var clazz = startAt
+
+                    while (clazz != stopAt) {
+//                        var templatesDefinition =
+                                //noinspection GroovyUnusedCatchParameter
+//                                try {
+//                                    clazz[property]
+//                                } catch (MissingPropertyException e) {
+//                                    // swallow
+//                                }
+//
+//                        if (templatesDefinition) {
+//                            if (!(templatesDefinition is Closure)) {
+//                                throw IllegalArgumentException("'$property' static property of class $clazz should be a Closure")
+//                            }
+//                            templatesDefinitions << templatesDefinition.clone()
+//                        }
+//
+                        clazz = clazz.superclass
+                    }
+
+            build(browser, container, navigatorFactory, templatesDefinitions.reversed().joinToString {it}, clazz)
+        }
     }
 }
 
@@ -173,6 +216,9 @@ interface Initializable {
 
 interface Navigatable {
 
+}
+
+interface PageContentContainer {
 }
 
 class ConfigurationLoader {
