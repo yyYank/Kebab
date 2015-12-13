@@ -15,7 +15,7 @@ class Browser {
     // UTF-8の定数
     val UTF8 = "UTF-8"
     // コンフィグ
-    val config : Configuration by Delegates.notNull<Configuration>()
+    var config : Configuration by Delegates.notNull<Configuration>()
     // ページオブジェクト
     val page : Page by Delegates.notNull<Page>()
     // ページの変化通知リスナ
@@ -32,15 +32,88 @@ class Browser {
     // @Lazy
     val augmentedDriver : WebDriver = RemoteDriverOperation(this.javaClass.classLoader).getAugmentedDriver(getDriver())
 
+
+    /**
+     * Create a new browser with a default configuration loader, loading the default configuration file.
+     *
+     * @see kebab.ConfigurationLoader
+     */
+    constructor() {
+        this(ConfigurationLoader().conf)
+    }
+
+    private operator fun invoke(conf: Configuration) {
+        this.config = conf
+    }
+
+    /**
+     * Create a new browser backed by the given configuration.
+     *
+     * @see kebab.Configuration
+     */
+    constructor(config : Configuration) {
+        this.config = config
+    }
+
+
     /**
      * The driver implementation used to automate the actual browser.
      * <p>
      * The driver implementation to use is determined by the configuration.
      *
-     * @see geb.Configuration#getDriver()
+     * @see kebab.Configuration#getDriver()
      */
      fun getDriver() : WebDriver  = config.driver
 
+    /**
+     * Creates a new browser object via the default constructor and executes the closure
+     * with the browser instance as the closure's delegate.
+     *
+     * @return the created browser
+     */
+    // TODO url
+    fun drive(url : String, script : () -> Any) = drive(Browser(), script)
+
+
+        /**
+         * Creates a new browser object via the default constructor and executes the closure
+         * with the browser instance as the closure's delegate.
+         *
+         * @return the created browser
+         */
+        fun drive(script : () -> Any) = drive(Browser(), script)
+
+
+        /**
+         * Creates a new browser with the configuration and executes the closure
+         * with the browser instance as the closure's delegate.
+         *
+         * @return the created browser
+         */
+        fun drive(conf : Configuration, script : () -> Any)  = drive(Browser(conf), script)
+
+
+        /**
+         * Creates a new browser with the properties and executes the closure
+         * with the browser instance as the closure's delegate.
+         *
+         * @return the created browser
+         */
+//        fun drive(browserProperties : Map<String, Any>, script : () -> Any) : Browser
+//        {
+//            drive(Browser(browserProperties), script)
+//        }
+
+        /**
+         * Executes the closure with browser as its delegate.
+         *
+         * @return browser
+         */
+        fun drive(browser : Browser, script : () -> Any) : Browser {
+//            script.delegate = browser
+            script()
+            return browser
+        }
 
 }
 
@@ -260,7 +333,7 @@ interface PageContentContainer {
 }
 
 class ConfigurationLoader {
-    val conf = ""
+    val conf : Configuration by Delegates.notNull<Configuration>()
 }
 
 class Configuration {
