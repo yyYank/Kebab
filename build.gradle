@@ -26,6 +26,7 @@ repositories {
 dependencies {
   compile 'org.jetbrains.kotlin:kotlin-stdlib:0.1-SNAPSHOT'
   compile 'org.seleniumhq.selenium:selenium-java:2.48.2'
+  testCompile 'junit:junit:4.12'
 }
 
 sourceSets {
