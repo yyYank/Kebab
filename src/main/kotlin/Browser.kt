@@ -1,7 +1,11 @@
 package kebab
 
 import org.openqa.selenium.WebDriver
+import java.net.URI
+import java.net.URL
 import java.util.*
+import kotlin.collections.emptyMap
+import kotlin.collections.listOf
 import kotlin.properties.Delegates
 
 /**
@@ -71,8 +75,7 @@ class Browser {
      *
      * @return the created browser
      */
-    // TODO url
-    fun drive(url : String, script : () -> Any) = drive(Browser(), script)
+    fun drive(url : String, script : () -> Any) = drive(Browser(), url, script)
 
 
         /**
@@ -81,7 +84,7 @@ class Browser {
          *
          * @return the created browser
          */
-        fun drive(script : () -> Any) = drive(Browser(), script)
+//        fun drive(script : () -> Any) = drive(Browser(), script)
 
 
         /**
@@ -90,39 +93,85 @@ class Browser {
          *
          * @return the created browser
          */
-        fun drive(conf : Configuration, script : () -> Any)  = drive(Browser(conf), script)
+//        fun drive(conf : Configuration, script : () -> Any)  = drive(Browser(conf), script)
 
-
-        /**
-         * Creates a new browser with the properties and executes the closure
-         * with the browser instance as the closure's delegate.
-         *
-         * @return the created browser
-         */
-//        fun drive(browserProperties : Map<String, Any>, script : () -> Any) : Browser
-//        {
-//            drive(Browser(browserProperties), script)
-//        }
 
         /**
          * Executes the closure with browser as its delegate.
          *
          * @return browser
          */
-        fun drive(browser : Browser, script : () -> Any) : Browser {
-//            script.delegate = browser
+        fun drive(browser : Browser, url : String, script : () -> Any) : Browser {
+            // ページオブジェクトの初期化
+            browser.page.init(browser)
+            browser.page.url = url
+            // 画面遷移
+            browser.go(url)
+            // TODO scriptのdelegateをbrowserに。
+            //  script.delegate = browser
             script()
             return browser
         }
 
+
+    /**
+     * Sends the browser to the configured {@link #getBaseUrl() base url}.
+     */
+    fun go() {
+        go(emptyMap<String, Any>(), "")
+    }
+
+    /**
+     * Sends the browser to the configured {@link #getBaseUrl() base url}, appending {@code params} as
+     * query parameters.
+     */
+    fun go(params : kotlin.Map<String, Any>) {
+        go(params, "")
+    }
+
+    /**
+     * Sends the browser to the given url. If it is relative it is resolved against the {@link #getBaseUrl() base url}.
+     */
+    fun go(url : String) {
+        go(emptyMap<String, Any>(), url)
+    }
+
+    /**
+     * Sends the browser to the given url. If it is relative it is resolved against the {@link #getBaseUrl() base url}.
+     */
+    fun go(params : kotlin.Map<String, Any>, url : String) {
+        val newUrl = calculateUri(url, params)
+        val currentUrl = getDriver().currentUrl
+        if (currentUrl == newUrl) {
+            getDriver().navigate().refresh()
+        } else {
+            getDriver().get(newUrl)
+        }
+    }
+
+    fun calculateUri(path : String, params : kotlin.Map<String, Any>) : String {
+        var uri = URI(path)
+        if (uri.isAbsolute) {
+            uri = URI(config.baseUrl).resolve(uri)
+        }
+        val queryString = toQueryString(params)
+        val joiner = if(uri.query != null) { '&' }else{ '?' }
+        return URL(uri.toString() + joiner + queryString).toString()
+    }
+
+    fun toQueryString(params : kotlin.Map<String, Any>) : String{
+        // TODO requestパラメータの文字列生成
+        // TODO UTF-8エンコードとか
+        return ""
+    }
+
+
 }
 
 class Page : Navigatable, PageContainer, Initializable, WatingSupport{
-    companion object {
-        var at = null
-        var url : String = ""
-        var atCheckWaiting = null
-    }
+    var at = null
+    var url = ""
+    var atCheckWaiting = null
     private var browser : Browser? = null
 
     // @Delegate
@@ -151,14 +200,14 @@ class Page : Navigatable, PageContainer, Initializable, WatingSupport{
     fun init (browser : Browser ) : Page {
         this.browser = browser
 
-        val contentTemplates = PageContentTemplateBuilder.build(
-                browser,
-                this as PageContentContainer,
-                browser.navigatorFactory,
-                "content",
-                this.javaClass
-        )
-        pageContentSupport = DefaultPageContentSupport(this, contentTemplates, browser.navigatorFactory)
+//        val contentTemplates = PageContentTemplateBuilder.build(
+//                browser,
+//                this as PageContentContainer,
+//                browser.navigatorFactory,
+//                "content",
+//                this.javaClass
+//        )
+//        pageContentSupport = DefaultPageContentSupport(this, contentTemplates, browser.navigatorFactory)
         navigableSupport = NavigableSupport(browser.navigatorFactory)
         downloadSupport = DefaultDownloadSupport(browser)
         waitingSupport = DefaultWaitingSupport(browser.config)
@@ -223,7 +272,7 @@ class PageContentTemplateBuilder(val browser : Browser, val container : PageCont
                   container : PageContentContainer,
                   navigatorFactory : NavigatorFactory,
                   property : String, startAt : Class<*>,
-                  stopAt : Class<*>  =  Any::class.javaClass) : HashMap<String, PageContentTemplate> {
+                  stopAt : Class<*>  =  Any::class.java) : HashMap<String, PageContentTemplate> {
 
             if (!stopAt.isAssignableFrom(startAt)) {
                 throw IllegalArgumentException("$startAt is not a subclass of $stopAt")
@@ -337,6 +386,7 @@ class ConfigurationLoader {
 }
 
 class Configuration {
+    var baseUrl = ""
     val driver : WebDriver by Delegates.notNull<WebDriver>()
 }
 

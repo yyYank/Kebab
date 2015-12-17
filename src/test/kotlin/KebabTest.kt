@@ -2,8 +2,8 @@ package kebab.junit4
 
 import kotlin.properties.Delegates
 import kebab.Browser
-import kotlin.test.assertEquals
-
+import org.junit.Test
+import org.junit.runner.RunWith
 
 class KebabTest {
     val kebabConfEnv : String by Delegates.notNull()
@@ -11,18 +11,17 @@ class KebabTest {
     private val browser = Browser()
 
 
+    @Test
     fun test() {
-        browser.drive("http://localhost:8080/Hello", {
+        browser.drive("http://localhost:8080/jkug", {
             // TODO これがやりたいんだがなかなか大変
-            // Hello画面が表示されていること
-            // assertEquals(title == 'Hello')
+            // 画面が表示されていること
+            // assertEquals(title == 'Hello Kotlin')
             // テキストボックスに「JGGUG」と入力
             // Greetボタンを押下
             // $('form').username = 'JKUG'
-            // def greetButton = $('input', name:'greet')
-            // greetButton.click()
-        }
-        )
-
+            // val sendButton = $('input', name:'send')
+            // sendButton.click()
+        })
     }
 }
