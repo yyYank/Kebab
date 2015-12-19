@@ -21,20 +21,20 @@ class Browser {
     // コンフィグ
     var config : Configuration by Delegates.notNull<Configuration>()
     // ページオブジェクト
-    val page : Page by Delegates.notNull<Page>()
+    val page = Page()
     // ページの変化通知リスナ
     val pageChangeListeners = LinkedHashSet<String>();
     // レポートを書き込むディレクトリパス
     var reportGroup : String? = null
     // ナビゲータのファクトリ。ナビゲータはページのナビゲートをするんだろな
-    var navigatorFactory : NavigatorFactory by Delegates.notNull<NavigatorFactory>()
+    var navigatorFactory by Delegates.notNull<NavigatorFactory>()
 
     /**
      * If the driver is remote, this object allows access to its capabilities (users of Kebab should not access this object, it is used internally).
      * リモートドライバの場合はコンフィグからオペレーションを介してドライバの設定をするっぽい
      */
     // @Lazy
-    val augmentedDriver : WebDriver = RemoteDriverOperation(this.javaClass.classLoader).getAugmentedDriver(getDriver())
+    // val augmentedDriver : WebDriver = RemoteDriverOperation(this.javaClass.classLoader).getAugmentedDriver(config.driver)
 
 
     /**
@@ -61,21 +61,12 @@ class Browser {
 
 
     /**
-     * The driver implementation used to automate the actual browser.
-     * <p>
-     * The driver implementation to use is determined by the configuration.
-     *
-     * @see kebab.Configuration#getDriver()
-     */
-     fun getDriver() : WebDriver  = config.driver
-
-    /**
      * Creates a new browser object via the default constructor and executes the closure
      * with the browser instance as the closure's delegate.
      *
      * @return the created browser
      */
-    fun drive(url : String, script : () -> Any) = drive(Browser(), url, script)
+    fun drive(url : String, script : () -> Any) = drive(this, url, script)
 
 
         /**
@@ -141,11 +132,11 @@ class Browser {
      */
     fun go(params : kotlin.Map<String, Any>, url : String) {
         val newUrl = calculateUri(url, params)
-        val currentUrl = getDriver().currentUrl
+        val currentUrl = config.driver.currentUrl
         if (currentUrl == newUrl) {
-            getDriver().navigate().refresh()
+            config.driver.navigate().refresh()
         } else {
-            getDriver().get(newUrl)
+            config.driver.get(newUrl)
         }
     }
 
@@ -165,218 +156,22 @@ class Browser {
         return ""
     }
 
-
-}
-
-class Page : Navigatable, PageContainer, Initializable, WatingSupport{
-    var at = null
-    var url = ""
-    var atCheckWaiting = null
-    private var browser : Browser? = null
-
-    // @Delegate
-    var pageContentSupport : PageContentSupport? = UninitializedPageContentSupport(this)
-    // @Delegate
-    var downloadSupport : DownloadSupport? = UninitializedDownloadSupport(this)
-
-    var waitingSupport : WaitingSupport = UninitializedWaitingSupport(this)
-
-    var textMatchingSupport : TextMatchingSupport = TextMatchingSupport()
-
-    var alertAndConfirmSupport : AlertAndConfirmSupport = UninitializedAlertAndConfirmSupport(this)
-
-    var navigableSupport : Navigable =  UninitializedNavigableSupport(this)
-
-    // @Delegate
-    var  frameSupport : FrameSupport = UninitializedFrameSupport(this)
-//    @Delegate
-    var interactionsSupport : InteractionsSupport = UninitializedInteractionSupport(this)
-
     /**
-     * Initialises this page instance, connecting it to the browser.
-     * <p>
-     * <b>This method is called internally, and should not be called by users of Kebab.</b>
+     * Quits the driver.
+     *
+     * @see org.openqa.selenium.WebDriver#quit()
      */
-    fun init (browser : Browser ) : Page {
-        this.browser = browser
-
-//        val contentTemplates = PageContentTemplateBuilder.build(
-//                browser,
-//                this as PageContentContainer,
-//                browser.navigatorFactory,
-//                "content",
-//                this.javaClass
-//        )
-//        pageContentSupport = DefaultPageContentSupport(this, contentTemplates, browser.navigatorFactory)
-        navigableSupport = NavigableSupport(browser.navigatorFactory)
-        downloadSupport = DefaultDownloadSupport(browser)
-        waitingSupport = DefaultWaitingSupport(browser.config)
-        frameSupport = DefaultFrameSupport(browser)
-        interactionsSupport = DefaultInteractionsSupport(browser)
-        alertAndConfirmSupport = DefaultAlertAndConfirmSupport({ this.getJs() }, browser.config)
-        return this
+    fun quit() {
+        config.driver.quit()
     }
 
-    fun getJs() = Any()
 }
 
-class DefaultAlertAndConfirmSupport(function: () -> Any, config: Configuration) : AlertAndConfirmSupport {
-
-}
-
-class DefaultInteractionsSupport(browser: Browser) : InteractionsSupport {
-
-}
-
-class UninitializedInteractionSupport(page: Page) : InteractionsSupport {
-
-}
-
-interface InteractionsSupport {
-
-}
-
-class DefaultFrameSupport(browser: Browser) : FrameSupport {
-
-}
-
-class DefaultDownloadSupport(browser: Browser) : DownloadSupport {
-
-}
-
-class UninitializedFrameSupport(page: Page) : FrameSupport {
-
-}
-
-interface FrameSupport {
-
-}
-
-class NavigableSupport(navigatorFactory: NavigatorFactory) : Navigable {
-
-}
-
-class DefaultWaitingSupport(config: Configuration) : WaitingSupport {
-
-}
-
-class DefaultPageContentSupport(page: Page, contentTemplates: Any, navigatorFactory: NavigatorFactory) : PageContentSupport {
-
-}
-
-class PageContentTemplateBuilder(val browser : Browser, val container : PageContentContainer, val navigatorFactory : NavigatorFactory) {
-    val templates = HashMap<String, PageContentTemplate>()
-    companion object {
-
-        fun build(browser : Browser,
-                  container : PageContentContainer,
-                  navigatorFactory : NavigatorFactory,
-                  property : String, startAt : Class<*>,
-                  stopAt : Class<*>  =  Any::class.java) : HashMap<String, PageContentTemplate> {
-
-            if (!stopAt.isAssignableFrom(startAt)) {
-                throw IllegalArgumentException("$startAt is not a subclass of $stopAt")
-            }
-
-            val templatesDefinitions = listOf("1")
-            var clazz = startAt
-
-            while (clazz != stopAt) {
-                //                        var templatesDefinition =
-                //noinspection GroovyUnusedCatchParameter
-                //                                try {
-                //                                    clazz[property]
-                //                                } catch (MissingPropertyException e) {
-                //                                    // swallow
-                //                                }
-                //
-                //                        if (templatesDefinition) {
-                //                            if (!(templatesDefinition is Closure)) {
-                //                                throw IllegalArgumentException("'$property' static property of class $clazz should be a Closure")
-                //                            }
-                //                            templatesDefinitions << templatesDefinition.clone()
-                //                        }
-                //
-                clazz = clazz.superclass
-            }
-            return build(browser, container, navigatorFactory, templatesDefinitions)
-        }
-
-        fun build(browser : Browser,
-                   container : PageContentContainer,
-                   navigatorFactory : NavigatorFactory,
-                   templatesDefinitions : List<Any>)  : HashMap<String, PageContentTemplate> {
-            val builder = PageContentTemplateBuilder(browser, container, navigatorFactory)
-            //        for (templatesDefinition in templatesDefinitions) {
-            //            templatesDefinition.delegate = builder
-            //            templatesDefinition()
-            //        }
-            return builder.templates
-        }
-    }
-}
-
-class PageContentTemplate {
-    // TODO 定義
-//    val browser : Browser
-//    val owner : PageContentContainer
-//    val name : String
-//    val params : String
-//    val factory : Closure
-//    val navigatorFactory : NavigatorFactory
-}
 
 interface Navigable {
 
 }
 
-class UninitializedNavigableSupport(page: Page) : Navigable {
-
-}
-
-interface AlertAndConfirmSupport {
-
-}
-
-class UninitializedAlertAndConfirmSupport(page : Page) : AlertAndConfirmSupport {
-
-}
-
-class TextMatchingSupport {
-
-}
-
-class UninitializedWaitingSupport(page : Page) : WaitingSupport
-class UninitializedDownloadSupport(page : Page) : DownloadSupport
-class UninitializedPageContentSupport(page : Page) : PageContentSupport
-
-interface WaitingSupport {
-
-}
-
-interface DownloadSupport {
-
-}
-
-interface PageContentSupport{
-
-}
-
-interface WatingSupport {
-
-}
-
-interface PageContainer {
-
-}
-
-interface Initializable {
-
-}
-
-interface Navigatable {
-
-}
 
 interface PageContentContainer {
 }
@@ -385,9 +180,6 @@ class ConfigurationLoader {
     val conf : Configuration by Delegates.notNull<Configuration>()
 }
 
-class Configuration {
-    var baseUrl = ""
-    val driver : WebDriver by Delegates.notNull<WebDriver>()
-}
+class Configuration (val baseUrl : String , val driver : WebDriver)
 
 
