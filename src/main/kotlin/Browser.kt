@@ -1,6 +1,8 @@
 package kebab
 
+import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
+import org.openqa.selenium.support.ui.Wait
 import java.net.URI
 import java.net.URL
 import java.util.*
@@ -27,7 +29,7 @@ class Browser {
     // レポートを書き込むディレクトリパス
     var reportGroup : String? = null
     // ナビゲータのファクトリ。ナビゲータはページのナビゲートをするんだろな
-    var navigatorFactory by Delegates.notNull<NavigatorFactory>()
+    var navigatorFactory : NavigatorFactory  by Delegates.notNull<NavigatorFactory>()
 
     /**
      * If the driver is remote, this object allows access to its capabilities (users of Kebab should not access this object, it is used internally).
@@ -57,6 +59,7 @@ class Browser {
      */
     constructor(config : Configuration) {
         this.config = config
+        this.navigatorFactory = config.createNavigatorFactory(this)
     }
 
 
@@ -66,7 +69,7 @@ class Browser {
      *
      * @return the created browser
      */
-    fun drive(url : String, script : () -> Any) = drive(this, url, script)
+    fun drive(url : String, script : Page.() -> Unit) = drive(this, url, script)
 
 
         /**
@@ -92,7 +95,7 @@ class Browser {
          *
          * @return browser
          */
-        fun drive(browser : Browser, url : String, script : () -> Any) : Browser {
+        fun drive(browser : Browser, url : String, script : Page.() -> Unit) : Browser {
             // ページオブジェクトの初期化
             browser.page.init(browser)
             browser.page.url = url
@@ -100,7 +103,7 @@ class Browser {
             browser.go(url)
             // TODO scriptのdelegateをbrowserに。
             //  script.delegate = browser
-            script()
+            browser.page.script()
             return browser
         }
 
@@ -169,7 +172,24 @@ class Browser {
 
 
 interface Navigable {
-
+    fun find() : Navigator
+    fun find(index : Int) : Navigator
+    fun find(range : ClosedRange<Int>) : Navigator
+    fun find(selector : String): Navigator
+    fun find(selector : String, index : Int): Navigator
+    fun find(selector : String, range: ClosedRange<Int>): Navigator
+    fun find(attributes : MutableMap<String, Any>): Navigator
+    fun find(attributes : MutableMap<String, Any>, index: Int): Navigator
+    fun find(attributes : MutableMap<String, Any>, range: ClosedRange<Int>): Navigator
+    fun find(attributes : MutableMap<String, Any>, selector: String): Navigator
+    fun find(attributes : MutableMap<String, Any>, selector: String, index: Int): Navigator
+    fun find(attributes : MutableMap<String, Any>, selector: String, range: ClosedRange<Int>): Navigator
+    fun find(attributes : MutableMap<String, Any>, bySelector : By): Navigator
+    fun find(attributes : MutableMap<String, Any>, bySelector : By, index: Int): Navigator
+    fun find(attributes : MutableMap<String, Any>, bySelector : By, range: ClosedRange<Int>): Navigator
+    fun find(bySelector : By): Navigator
+    fun find(bySelector : By, index: Int): Navigator
+    fun find(bySelector : By, range: ClosedRange<Int>): Navigator
 }
 
 
@@ -180,6 +200,42 @@ class ConfigurationLoader {
     val conf : Configuration by Delegates.notNull<Configuration>()
 }
 
-class Configuration (val baseUrl : String , val driver : WebDriver)
+class Configuration (val baseUrl : String , val driver : WebDriver) {
+    val baseNavigatorWaiting: Wait<Any>? = null
+    val rawConfig = HashMap<String, NavigatorFactory>()
+    /**
+     * Creates the navigator factory to be used.
+     *
+     * Returns {@link BrowserBackedNavigatorFactory} by default.
+     * <p>
+     * Override by setting the 'navigatorFactory' to a closure that takes a single {@link Browser} argument
+     * and returns an instance of {@link NavigatorFactory}
+     *
+     * @param browser The browser to use as the basis of the navigatory factory.
+     * @return
+     */
+    fun createNavigatorFactory(browser: Browser): NavigatorFactory {
+        val navigatorFactory = readValue("navigatorFactory", browser, null)
+        if (navigatorFactory == null) {
+            return BrowserBackedNavigatorFactory(browser, InnerNavigatorFactory())
+        } else {
+            val result = navigatorFactory.getBase()
+            if (result is NavigatorFactory) {
+                return result
+            }
+
+            throw InvalidGebConfiguration("navigatorFactory is '${navigatorFactory}', it should be a Closure that returns a NavigatorFactory implementation")
+        }
+        return BrowserBackedNavigatorFactory(browser, InnerNavigatorFactory())
+    }
+
+    private fun readValue(key: String, browser : Browser, defaultValue : NavigatorFactory?) =
+            if (rawConfig.containsKey(key)) {
+                rawConfig.get(key)
+            } else {
+                defaultValue
+            }
+}
+
 
 
