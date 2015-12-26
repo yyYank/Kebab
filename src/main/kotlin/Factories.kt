@@ -2,6 +2,7 @@ package kebab
 
 import kebab.Navigate
 import org.openqa.selenium.By
+import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import java.util.*
 import kotlin.collections.asSequence
@@ -51,10 +52,9 @@ class BrowserBackedNavigatorFactory(browser: Browser, innerNavigatorFactory: Inn
     }
 }
 
-class DefaultLocator(searchContextBasedBasicLocator: SearchContextBasedBasicLocator) : Locator {
-    override fun find(bySelector: By): Navigator {
-        throw UnsupportedOperationException()
-    }
+class DefaultLocator(val searchContextBasedBasicLocator: SearchContextBasedBasicLocator) : Locator {
+    override fun find(bySelector: By): Navigator = searchContextBasedBasicLocator.find(bySelector)!!
+
 
     override fun find(attributes: MutableMap<String, Any>, selector: String): Navigator {
         throw UnsupportedOperationException()
@@ -114,7 +114,11 @@ class DefaultLocator(searchContextBasedBasicLocator: SearchContextBasedBasicLoca
 
 }
 
-class SearchContextBasedBasicLocator(driver: Any, browserBackedNavigatorFactory: BrowserBackedNavigatorFactory) {
+class SearchContextBasedBasicLocator(val driver: WebDriver, val browserBackedNavigatorFactory: BrowserBackedNavigatorFactory) {
+    fun find(bySelector : By) : Navigator? {
+        val elements = driver.findElements(bySelector)
+        return browserBackedNavigatorFactory.createFromWebElements(elements)
+    }
 
 }
 
