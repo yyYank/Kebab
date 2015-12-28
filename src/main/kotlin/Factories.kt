@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import java.util.*
 import kotlin.collections.asSequence
+import kotlin.collections.first
+import kotlin.collections.firstOrNull
 import kotlin.properties.Delegates
 import kotlin.sequences.forEach
 
@@ -177,7 +179,16 @@ class NavigatorBackedNavigatorFactory(newBase: Navigator, innerNavigatorFactory:
 
 }
 
-class InnerNavigatorFactory {
-    fun <T> createNavigator(browser: Browser, filtered: ArrayList<T>) : Navigator? = null
+interface InnerNavigatorFactory {
+    fun <T> createNavigator(browser: Browser, filtered: ArrayList<T>) : Navigator?
+
+}
+
+
+class DefaultInnerNavigatorFactory : InnerNavigatorFactory{
+    override fun <T> createNavigator(browser: Browser, elements: ArrayList<T>): Navigator? {
+        // TODO Locator
+        return if(elements != null) { NonEmptyNavigator(browser, elements, EmptyLocator())} else { EmptyNavigator(browser, elements, EmptyLocator()) }
+    }
 
 }

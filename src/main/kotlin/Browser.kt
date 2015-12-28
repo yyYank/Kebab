@@ -215,9 +215,9 @@ class Configuration (val baseUrl : String , val driver : WebDriver) {
      * @return
      */
     fun createNavigatorFactory(browser: Browser): NavigatorFactory {
-        val navigatorFactory = readValue("navigatorFactory", browser, null)
+        val navigatorFactory = readValue("navigatorFactory", null)
         if (navigatorFactory == null) {
-            return BrowserBackedNavigatorFactory(browser, InnerNavigatorFactory())
+            return BrowserBackedNavigatorFactory(browser, getInnerNavigatorFactory())
         } else {
             val result = navigatorFactory.getBase()
             if (result is NavigatorFactory) {
@@ -226,15 +226,41 @@ class Configuration (val baseUrl : String , val driver : WebDriver) {
 
             throw InvalidGebConfiguration("navigatorFactory is '${navigatorFactory}', it should be a Closure that returns a NavigatorFactory implementation")
         }
-        return BrowserBackedNavigatorFactory(browser, InnerNavigatorFactory())
+        return BrowserBackedNavigatorFactory(browser, getInnerNavigatorFactory())
     }
 
-    private fun readValue(key: String, browser : Browser, defaultValue : NavigatorFactory?) =
+    private fun readValue(key: String, defaultValue : NavigatorFactory?) =
             if (rawConfig.containsKey(key)) {
                 rawConfig.get(key)
             } else {
                 defaultValue
             }
+
+    /**
+     * Returns the inner navigatory factory, that turns WebElements into Navigators.
+     *
+     * Returns {@link DefaultInnerNavigatorFactory} instances by default.
+     * <p>
+     * To override, set 'innerNavigatorFactory' to:
+     * <ul>
+     * <li>An instance of {@link InnerNavigatorFactory}
+     * <li>A Closure, that has the signature ({@link Browser}, List<{@link org.openqa.selenium.WebElement}>)
+     * </ul>
+     *
+     * @return The inner navigator factory.
+     */
+     fun getInnerNavigatorFactory() : InnerNavigatorFactory {
+        val innerNavigatorFactory = readValue("innerNavigatorFactory", null)
+        if (innerNavigatorFactory == null) {
+            return DefaultInnerNavigatorFactory()
+        } else if (innerNavigatorFactory is InnerNavigatorFactory) {
+            return innerNavigatorFactory
+//        } else if (innerNavigatorFactory is Closure) {
+//            ClosureInnerNavigatorFactory(innerNavigatorFactory)
+        } else {
+            throw InvalidGebConfiguration("innerNavigatorFactory is '${innerNavigatorFactory}', it should be a Closure or InnerNavigatorFactory implementation")
+        }
+    }
 }
 
 

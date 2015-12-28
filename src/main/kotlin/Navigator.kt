@@ -3,6 +3,7 @@ package kebab
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.Wait
+import java.util.*
 import java.util.jar.Attributes
 
 
@@ -267,4 +268,352 @@ interface BasicLocator {
      * @return a new Navigator instance containing the matched elements
      */
     fun find(attributes: MutableMap<String, Any>, selector : String) : Navigator
+}
+
+class EmptyLocator : Locator {
+    override fun find(attributes: MutableMap<String, Any>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, bySelector: By): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, bySelector: By, index: Int): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, bySelector: By, range: ClosedRange<Int>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, index: Int): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, range: ClosedRange<Int>) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, selector: String, index: Int) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, selector: String, range: ClosedRange<Int>) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(bySelector: By, index: Int): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(bySelector: By, range: ClosedRange<Int>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(selector: String, index: Int): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(selector: String, range: ClosedRange<Int>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(bySelector: By): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+}
+
+abstract class AbstractNavigator(val browser : Browser, val locator: Locator) : Navigator {
+
+    abstract fun getElement(index : Int)
+
+    override fun find(predicates : MutableMap<String, Any> ) = locator.find(predicates)
+
+
+    override fun find(predicates : MutableMap<String, Any>, index : Int) = locator.find(predicates, index)
+
+
+    override fun find(bySelector: By) : Navigator = locator.find(bySelector)
+
+    // TODO 関数定義全然やってない
+}
+
+class NonEmptyNavigator<T>(browser: Browser, elements: ArrayList<T>, locator: Locator) : AbstractNavigator(browser, locator) {
+    override fun getElement(index: Int) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(selector: String, index: Int): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(selector: String, range: ClosedRange<Int>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, bySelector: By): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, bySelector: By, index: Int): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, bySelector: By, range: ClosedRange<Int>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(bySelector: By, index: Int): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(bySelector: By, range: ClosedRange<Int>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, range: ClosedRange<Int>) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, selector: String, index: Int) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, selector: String, range: ClosedRange<Int>) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun has(selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun has(predicates: Map<String, Any>, selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun has(bySelector: By): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun has(predicates: Map<String, Any>, bySelector: By): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun filter(selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun filter(predicates: Map<String, Any>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun filter(predicates: Map<String, Any>, selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun not(predicates: Map<String, Any>, selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun tag(): String {
+        throw UnsupportedOperationException()
+    }
+
+    override fun text(): String {
+        throw UnsupportedOperationException()
+    }
+
+    override fun getAttribute(name: String): String {
+        throw UnsupportedOperationException()
+    }
+
+    override fun attr(name: String): String {
+        throw UnsupportedOperationException()
+    }
+
+    override fun click(): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun click(pageClass: Class<out Page>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun click(pageInstance: Page) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun click(pageClass: Class<out Page>, wait: Wait<Any>) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun click(pageInstance: Page, wait: Wait<Any>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun click(potentialPages: List<out Page>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun click(potentialPages: List<out Page>, wait: Wait<Any>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun iterator(): Iterator<Navigator> {
+        throw UnsupportedOperationException()
+    }
+
+}
+
+class EmptyNavigator<T>(browser: Browser, elements: ArrayList<T>, locator: Locator) : AbstractNavigator(browser, locator) {
+    override fun find(attributes: MutableMap<String, Any>, bySelector: By): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, bySelector: By, index: Int): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, bySelector: By, range: ClosedRange<Int>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, range: ClosedRange<Int>) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, selector: String, index: Int) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, selector: String, range: ClosedRange<Int>) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(bySelector: By, index: Int): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(bySelector: By, range: ClosedRange<Int>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(selector: String, index: Int): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(selector: String, range: ClosedRange<Int>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(attributes: MutableMap<String, Any>, selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun attr(name: String): String {
+        throw UnsupportedOperationException()
+    }
+
+    override fun click(): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun click(pageClass: Class<out Page>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun click(pageClass: Class<out Page>, wait: Wait<Any>) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun click(pageInstance: Page) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun click(pageInstance: Page, wait: Wait<Any>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun click(potentialPages: List<out Page>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun click(potentialPages: List<out Page>, wait: Wait<Any>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun filter(predicates: Map<String, Any>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun filter(predicates: Map<String, Any>, selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun filter(selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun getAttribute(name: String): String {
+        throw UnsupportedOperationException()
+    }
+
+    override fun has(bySelector: By): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun has(predicates: Map<String, Any>, bySelector: By): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun has(predicates: Map<String, Any>, selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun has(selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun not(predicates: Map<String, Any>, selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun tag(): String {
+        throw UnsupportedOperationException()
+    }
+
+    override fun text(): String {
+        throw UnsupportedOperationException()
+    }
+
+    override fun iterator(): Iterator<Navigator> {
+        throw UnsupportedOperationException()
+    }
+
+    override fun getElement(index: Int) {
+        throw UnsupportedOperationException()
+    }
+
 }
