@@ -42,9 +42,9 @@ class KebabTest {
             assertEquals("Google", title)
             // TODO ここらへん出来てない
             // 検索ボタンを押下
-             val searchButton = find(By.cssSelector(".jsb > center:nth-child(1) > input:nth-child(1)"))
+            val searchButton = find(By.cssSelector(".jsb > center:nth-child(1) > input:nth-child(1)"))
             // 検索を実行する
-             searchButton.click()
+            searchButton.click()
         })
         browser.quit()
     }
