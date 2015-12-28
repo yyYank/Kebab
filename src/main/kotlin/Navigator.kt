@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.Wait
 import java.util.*
 import java.util.jar.Attributes
+import kotlin.collections.first
 
 
 interface  Navigator : Iterable<Navigator>, Locator {
@@ -348,7 +349,7 @@ abstract class AbstractNavigator(val browser : Browser, val locator: Locator) : 
     // TODO 関数定義全然やってない
 }
 
-class NonEmptyNavigator<T>(browser: Browser, elements: ArrayList<T>, locator: Locator) : AbstractNavigator(browser, locator) {
+class NonEmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, locator: Locator) : AbstractNavigator(browser, locator) {
     override fun getElement(index: Int) {
         throw UnsupportedOperationException()
     }
@@ -450,7 +451,8 @@ class NonEmptyNavigator<T>(browser: Browser, elements: ArrayList<T>, locator: Lo
     }
 
     override fun click(): Navigator {
-        throw UnsupportedOperationException()
+        elements.first{ it != null }.click()
+        return this
     }
 
     override fun click(pageClass: Class<out Page>): Navigator {

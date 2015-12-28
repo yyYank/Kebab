@@ -180,13 +180,13 @@ class NavigatorBackedNavigatorFactory(newBase: Navigator, innerNavigatorFactory:
 }
 
 interface InnerNavigatorFactory {
-    fun <T> createNavigator(browser: Browser, filtered: ArrayList<T>) : Navigator?
+    fun createNavigator(browser: Browser, filtered: ArrayList<WebElement>) : Navigator?
 
 }
 
 
 class DefaultInnerNavigatorFactory : InnerNavigatorFactory{
-    override fun <T> createNavigator(browser: Browser, elements: ArrayList<T>): Navigator? {
+    override fun createNavigator(browser: Browser, elements: ArrayList<WebElement>): Navigator? {
         // TODO Locator
         return if(elements != null) { NonEmptyNavigator(browser, elements, EmptyLocator())} else { EmptyNavigator(browser, elements, EmptyLocator()) }
     }
