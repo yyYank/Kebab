@@ -338,27 +338,23 @@ abstract class AbstractNavigator(val browser : Browser, val locator: Locator) : 
 
     abstract fun getElement(index : Int) : WebElement
 
-    override fun find(predicates : MutableMap<String, Any> ) = locator.find(predicates)
+    override fun find(selector : String) = locator.find(selector)
 
+    override fun find(selector : String, index : Int) = locator.find(selector, index)
+
+    override fun find(predicates : MutableMap<String, Any> ) = locator.find(predicates)
 
     override fun find(predicates : MutableMap<String, Any>, index : Int) = locator.find(predicates, index)
 
-
     override fun find(bySelector: By) : Navigator = locator.find(bySelector)
+
+    override fun find(bySelector: By, index : Int) : Navigator = locator.find(bySelector, index)
 
     // TODO 関数定義全然やってない
 }
 
 class NonEmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, locator: Locator) : AbstractNavigator(browser, locator) {
     override fun getElement(index: Int) = elements.get(index)
-
-    override fun find(selector: String): Navigator {
-        throw UnsupportedOperationException()
-    }
-
-    override fun find(selector: String, index: Int): Navigator {
-        throw UnsupportedOperationException()
-    }
 
     override fun find(selector: String, range: ClosedRange<Int>): Navigator {
         throw UnsupportedOperationException()
