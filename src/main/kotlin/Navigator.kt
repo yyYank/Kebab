@@ -336,7 +336,7 @@ class EmptyLocator : Locator {
 
 abstract class AbstractNavigator(val browser : Browser, val locator: Locator) : Navigator {
 
-    abstract fun getElement(index : Int)
+    abstract fun getElement(index : Int) : WebElement
 
     override fun find(predicates : MutableMap<String, Any> ) = locator.find(predicates)
 
@@ -350,9 +350,7 @@ abstract class AbstractNavigator(val browser : Browser, val locator: Locator) : 
 }
 
 class NonEmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, locator: Locator) : AbstractNavigator(browser, locator) {
-    override fun getElement(index: Int) {
-        throw UnsupportedOperationException()
-    }
+    override fun getElement(index: Int) = elements.get(index)
 
     override fun find(selector: String): Navigator {
         throw UnsupportedOperationException()
@@ -485,7 +483,7 @@ class NonEmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, l
 
 }
 
-class EmptyNavigator<T>(browser: Browser, elements: ArrayList<T>, locator: Locator) : AbstractNavigator(browser, locator) {
+class EmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, locator: Locator) : AbstractNavigator(browser, locator) {
     override fun find(attributes: MutableMap<String, Any>, bySelector: By): Navigator {
         throw UnsupportedOperationException()
     }
@@ -614,8 +612,6 @@ class EmptyNavigator<T>(browser: Browser, elements: ArrayList<T>, locator: Locat
         throw UnsupportedOperationException()
     }
 
-    override fun getElement(index: Int) {
-        throw UnsupportedOperationException()
-    }
+    override fun getElement(index: Int) = elements.get(index)
 
 }
