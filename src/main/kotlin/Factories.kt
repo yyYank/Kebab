@@ -68,21 +68,7 @@ open abstract class AbstractNavigatorFactory (val browser : Browser, override va
         }
         return innerNavigatorFactory.createNavigator(browser, filtered)
     }
-
-
-//    fun createFromNavigators(navigators : Iterable<Navigator>) : Navigator{
-//        val filtered = ArrayList<Navigator>()
-//        navigators.asSequence().forEach {
-//            if (it != null) {
-//                filtered.add(it)
-//            }
-//        }
-//        innerNavigatorFactory.createNavigator(browser, filtered)
-//    }
-
     override fun relativeTo(newBase : Navigator) : NavigatorFactory = NavigatorBackedNavigatorFactory(newBase, innerNavigatorFactory)
-
-
 }
 
 class NavigatorBackedNavigatorFactory(newBase: Navigator, innerNavigatorFactory: InnerNavigatorFactory) : NavigatorFactory{
