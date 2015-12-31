@@ -9,11 +9,11 @@ import org.openqa.selenium.WebDriver
 /**
  * Created by yy_yank on 2015/12/30.
  */
-class DefaultLocator(val searchContextBasedBasicLocator: SearchContextBasedBasicLocator) : Locator {
+class DefaultLocator(val locator: SearchContextBasedBasicLocator) : Locator {
 
     // TODO UnsupportedOperationExceptionの山
 
-    override fun find(bySelector: By): Navigator = searchContextBasedBasicLocator.find(bySelector)!!
+    override fun find(bySelector: By): Navigator = locator.find(bySelector)!!
 
 
     override fun find(attributes: MutableMap<String, Any>, selector: String): Navigator {
@@ -74,10 +74,14 @@ class DefaultLocator(val searchContextBasedBasicLocator: SearchContextBasedBasic
 
 }
 
-class SearchContextBasedBasicLocator(val driver: WebDriver, val browserBackedNavigatorFactory: BrowserBackedNavigatorFactory) {
-    fun find(bySelector : By) : Navigator? {
+class SearchContextBasedBasicLocator(val driver: WebDriver, val browserBackedNavigatorFactory: BrowserBackedNavigatorFactory) : BasicLocator {
+    override fun find(attributes: MutableMap<String, Any>, selector: String): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun find(bySelector : By) : Navigator {
         val elements = driver.findElements(bySelector)
-        return browserBackedNavigatorFactory.createFromWebElements(elements)
+        return browserBackedNavigatorFactory.createFromWebElements(elements)!!
     }
 
 }
