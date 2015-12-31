@@ -13,16 +13,14 @@ class DefaultLocator(val locator: SearchContextBasedBasicLocator) : Locator {
 
     // TODO UnsupportedOperationExceptionの山
 
-    override fun find(bySelector: By): Navigator = locator.find(bySelector)!!
-
+    override fun find(bySelector: By): Navigator = locator.find(bySelector)
 
     override fun find(attributes: MutableMap<String, Any>, selector: String): Navigator {
         throw UnsupportedOperationException()
     }
 
-    override fun find(selector: String): Navigator {
-        throw UnsupportedOperationException()
-    }
+    override fun find(selector: String) = find(By.cssSelector(selector))
+
 
     override fun find(attributes: MutableMap<String, Any>): Navigator {
         throw UnsupportedOperationException()
@@ -36,9 +34,7 @@ class DefaultLocator(val locator: SearchContextBasedBasicLocator) : Locator {
         throw UnsupportedOperationException()
     }
 
-    override fun find(attributes: MutableMap<String, Any>, bySelector: By): Navigator {
-        throw UnsupportedOperationException()
-    }
+    override fun find(attributes: MutableMap<String, Any>, bySelector: By) = find(bySelector).filter(attributes)
 
     override fun find(attributes: MutableMap<String, Any>, bySelector: By, index: Int): Navigator {
         throw UnsupportedOperationException()
