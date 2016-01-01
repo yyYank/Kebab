@@ -15,16 +15,11 @@ class DefaultLocator(val locator: SearchContextBasedBasicLocator) : Locator {
 
     override fun find(bySelector: By): Navigator = locator.find(bySelector)
 
-    override fun find(attributes: MutableMap<String, Any>, selector: String): Navigator {
-        throw UnsupportedOperationException()
-    }
+    override fun find(attributes: MutableMap<String, Any>, selector: String) = locator.find(attributes, selector)
 
     override fun find(selector: String) = find(By.cssSelector(selector))
 
-
-    override fun find(attributes: MutableMap<String, Any>): Navigator {
-        throw UnsupportedOperationException()
-    }
+    override fun find(attributes: MutableMap<String, Any>) = find(attributes, MATCH_ALL_SELECTOR)
 
     override fun find(selector: String, index: Int): Navigator {
         throw UnsupportedOperationException()
