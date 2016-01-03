@@ -67,7 +67,7 @@ class DefaultLocator(val locator: SearchContextBasedBasicLocator) : Locator {
 
 class SearchContextBasedBasicLocator(val driver: WebDriver, val browserBackedNavigatorFactory: BrowserBackedNavigatorFactory) : BasicLocator {
     override fun find(attributes: MutableMap<String, Any>, selector: String): Navigator {
-        throw UnsupportedOperationException()
+        return browserBackedNavigatorFactory.createFromWebElements(driver.findElements(By.cssSelector(selector)))!!
     }
 
     override fun find(bySelector : By) : Navigator {
