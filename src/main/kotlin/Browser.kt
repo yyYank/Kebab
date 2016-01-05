@@ -196,6 +196,11 @@ interface Navigable {
 interface PageContentContainer {
 }
 
+// TODO ページコンテナ実装
+class DefaultPageContentContainer : PageContentContainer {
+
+}
+
 class ConfigurationLoader {
     val conf : Configuration by Delegates.notNull<Configuration>()
 }

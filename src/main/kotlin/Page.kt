@@ -42,15 +42,8 @@ class Page : Navigatable, PageContainer, Initializable, WatingSupport {
     fun init (browser : Browser) : Page {
         this.browser = browser
         title = browser.config.driver.title
-
-        //        val contentTemplates = PageContentTemplateBuilder.build(
-        //                browser,
-        //                this as PageContentContainer,
-        //                browser.navigatorFactory,
-        //                "content",
-        //                this.javaClass
-        //        )
-        //        pageContentSupport = DefaultPageContentSupport(this, contentTemplates, browser.navigatorFactory)
+        val contentTemplates = PageContentTemplateBuilder.build(browser, DefaultPageContentContainer(), browser.navigatorFactory, "content", this.javaClass)
+                pageContentSupport = DefaultPageContentSupport(this, contentTemplates, browser.navigatorFactory)
 
         navigableSupport = NavigableSupport(browser.navigatorFactory!!)
         downloadSupport = DefaultDownloadSupport(browser)
