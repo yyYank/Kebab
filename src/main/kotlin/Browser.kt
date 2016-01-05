@@ -5,10 +5,15 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.Wait
 import java.net.URI
 import java.net.URL
+import java.net.URLEncoder
 import java.util.*
+import kotlin.collections.asSequence
 import kotlin.collections.emptyMap
 import kotlin.collections.listOf
 import kotlin.properties.Delegates
+import kotlin.sequences.joinToString
+import kotlin.sequences.map
+import kotlin.sequences.mapTo
 
 /**
  * The browser is the centre of Kebab. It encapsulates a {@link org.openqa.selenium.WebDriver} implementation and references
@@ -154,9 +159,8 @@ class Browser {
     }
 
     fun toQueryString(params : kotlin.Map<String, Any>) : String{
-        // TODO requestパラメータの文字列生成
-        // TODO UTF-8エンコードとか
-        return ""
+        // TODO 元の実装がcollectMany{name,values -> values.collect{v->....なので「key:value = 1:N」にしないとダメっぽい
+        return params.asSequence().map { m -> URLEncoder.encode(m.key, UTF8) + "=" + URLEncoder.encode(m.value.toString(), UTF8)}.joinToString {"&"}
     }
 
     /**
