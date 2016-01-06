@@ -11,7 +11,7 @@ Kebab builds with Gradle. You do not need to have Gradle installed to work with 
 
 On UNIX type environments this is gradlew and is gradlew.bat on Windows.
 
-For example to run the Geb test suite for the entire project you would run…
+For example to run the Kebab test suite for the entire project you would run…
 
     ./gradlew test
 
