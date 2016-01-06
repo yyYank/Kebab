@@ -99,6 +99,9 @@ interface  Navigator : Iterable<Navigator>, Locator {
      */
     fun click(potentialPages : List<out Page>, wait : Wait<Any>) : Navigator
 
+    fun getAt(index : Int) : Navigator
+
+    fun getAt(range: ClosedRange<Int>) : Navigator
 }
 
 class Navigate {
@@ -373,6 +376,13 @@ abstract class AbstractNavigator(val browser : Browser, val locator: Locator) : 
 }
 
 class NonEmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, locator: Locator) : AbstractNavigator(browser, locator) {
+    override fun getAt(range: ClosedRange<Int>): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun getAt(index: Int): Navigator {
+        throw UnsupportedOperationException()
+    }
 
     // TODO UnsupportedOperationExceptionの山
 
@@ -462,6 +472,13 @@ class NonEmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, l
 }
 
 class EmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, locator: Locator) : AbstractNavigator(browser, locator) {
+    override fun getAt(index: Int): Navigator {
+        throw UnsupportedOperationException()
+    }
+
+    override fun getAt(range: ClosedRange<Int>): Navigator {
+        throw UnsupportedOperationException()
+    }
 
     // TODO UnsupportedOperationExceptionの山
 
