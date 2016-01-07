@@ -27,26 +27,18 @@ class DefaultLocator(val locator: SearchContextBasedBasicLocator) : Locator {
 
     override fun find(attributes: MutableMap<String, Any>, bySelector: By) = find(bySelector).filter(attributes)
 
-    override fun find(attributes: MutableMap<String, Any>, bySelector: By, index: Int): Navigator {
-        throw UnsupportedOperationException()
-    }
+    override fun find(attributes: MutableMap<String, Any>, bySelector: By, index: Int) = locator.find(bySelector).filter(attributes).getAt(index)
 
-    override fun find(attributes: MutableMap<String, Any>, bySelector: By, range: ClosedRange<Int>): Navigator {
-        throw UnsupportedOperationException()
-    }
+    override fun find(attributes: MutableMap<String, Any>, bySelector: By, range: ClosedRange<Int>) = locator.find(bySelector).filter(attributes).getAt(range)
 
-    override fun find(bySelector: By, index: Int): Navigator {
-        throw UnsupportedOperationException()
-    }
+    override fun find(bySelector: By, index: Int) = locator.find(bySelector).getAt(index)
 
-    override fun find(bySelector: By, range: ClosedRange<Int>): Navigator {
-        throw UnsupportedOperationException()
-    }
+    override fun find(bySelector: By, range: ClosedRange<Int>) = locator.find(bySelector).getAt(range)
+
 
     override fun find(attributes: MutableMap<String, Any>, index: Int): Navigator {
         throw UnsupportedOperationException()
     }
-
     override fun find(attributes: MutableMap<String, Any>, range: ClosedRange<Int>) {
         throw UnsupportedOperationException()
     }
