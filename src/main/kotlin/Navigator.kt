@@ -212,7 +212,7 @@ interface Locator : BasicLocator{
      * @param predicates range the range of matches to select
      * @return new Navigator
      */
-    fun find(attributes: MutableMap<String, Any>, range: ClosedRange<Int>)
+    fun find(attributes: MutableMap<String, Any>, range: ClosedRange<Int>) : Navigator
 
     /**
      * Shorthand for <code>find(predicates, selector, index..index)</code>
@@ -220,7 +220,7 @@ interface Locator : BasicLocator{
      * @param selector
      * @return new Navigator
      */
-    fun find(attributes: MutableMap<String, Any>, selector: String, index: Int)
+    fun find(attributes: MutableMap<String, Any>, selector: String, index: Int) : Navigator
 
     /**
      * Creates a new Navigator instance containing the elements matching the given
@@ -246,7 +246,7 @@ interface Locator : BasicLocator{
      * @param selector a CSS selector
      * @return new Navigator instance containing the matched elements
      */
-    fun find(attributes: MutableMap<String, Any>, selector: String, range: ClosedRange<Int>)
+    fun find(attributes: MutableMap<String, Any>, selector: String, range: ClosedRange<Int>) : Navigator
 
 
 }
@@ -274,6 +274,14 @@ interface BasicLocator {
     fun find(attributes: MutableMap<String, Any>, selector : String) : Navigator
 }
 
+interface Navigable : Locator {
+
+    fun find() : Navigator
+    fun find(index: Int) : Navigator
+    fun find(range: ClosedRange<Int>) : Navigator
+
+}
+
 class EmptyLocator : Locator {
     // TODO UnsupportedOperationExceptionの山
 
@@ -297,15 +305,15 @@ class EmptyLocator : Locator {
         throw UnsupportedOperationException()
     }
 
-    override fun find(attributes: MutableMap<String, Any>, range: ClosedRange<Int>) {
+    override fun find(attributes: MutableMap<String, Any>, range: ClosedRange<Int>) : Navigator {
         throw UnsupportedOperationException()
     }
 
-    override fun find(attributes: MutableMap<String, Any>, selector: String, index: Int) {
+    override fun find(attributes: MutableMap<String, Any>, selector: String, index: Int) : Navigator{
         throw UnsupportedOperationException()
     }
 
-    override fun find(attributes: MutableMap<String, Any>, selector: String, range: ClosedRange<Int>) {
+    override fun find(attributes: MutableMap<String, Any>, selector: String, range: ClosedRange<Int>) : Navigator {
         throw UnsupportedOperationException()
     }
 

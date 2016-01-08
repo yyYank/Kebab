@@ -6,6 +6,10 @@ package kebab
 import org.openqa.selenium.By
 
 class UninitializedNavigableSupport(page: Page) : Navigable {
+    override fun find(attributes: MutableMap<String, Any>, selector: String, range: ClosedRange<Int>) : Navigator {
+        throw UnsupportedOperationException()
+    }
+
     override fun find(): Navigator {
         throw UnsupportedOperationException()
     }
@@ -50,9 +54,6 @@ class UninitializedNavigableSupport(page: Page) : Navigable {
         throw UnsupportedOperationException()
     }
 
-    override fun find(attributes: MutableMap<String, Any>, selector: String, range: ClosedRange<Int>): Navigator {
-        throw UnsupportedOperationException()
-    }
 
     override fun find(attributes: MutableMap<String, Any>, bySelector: By): Navigator {
         throw UnsupportedOperationException()
@@ -158,6 +159,10 @@ interface FrameSupport {
 }
 
 class NavigableSupport(val navigatorFactory: NavigatorFactory) : Navigable {
+    override fun find(attributes: MutableMap<String, Any>, selector: String, range: ClosedRange<Int>) : Navigator {
+        throw UnsupportedOperationException()
+    }
+
     override fun find(index: Int): Navigator {
         throw UnsupportedOperationException()
     }
@@ -198,9 +203,6 @@ class NavigableSupport(val navigatorFactory: NavigatorFactory) : Navigable {
         throw UnsupportedOperationException()
     }
 
-    override fun find(attributes: MutableMap<String, Any>, selector: String, range: ClosedRange<Int>): Navigator {
-        throw UnsupportedOperationException()
-    }
 
     override fun find(attributes: MutableMap<String, Any>, bySelector: By): Navigator {
         throw UnsupportedOperationException()

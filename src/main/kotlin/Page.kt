@@ -55,9 +55,9 @@ class Page : Navigatable, PageContainer, Initializable, WatingSupport {
     }
 
 
-    fun find() = navigableSupport.find()
-    fun find(index : Int) = navigableSupport.find(index)
-    fun find(range : ClosedRange<Int>) = navigableSupport.find(range)
+//    fun find() = navigableSupport.find()
+//    fun find(index : Int) = navigableSupport.find(index)
+//    fun find(range : ClosedRange<Int>) = navigableSupport.find(range)
     fun find(selector : String) = navigableSupport.find(selector)
     fun find(selector : String, index : Int) = navigableSupport.find(selector, index)
     fun find(selector : String, range: ClosedRange<Int>) = navigableSupport.find(selector, range)
@@ -75,3 +75,4 @@ class Page : Navigatable, PageContainer, Initializable, WatingSupport {
     fun find(bySelector: By, range: ClosedRange<Int>) = navigableSupport.find(bySelector, range)
     fun getJs() = Any()
 }
+
