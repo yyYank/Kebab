@@ -5,8 +5,11 @@ import kebab.Locator
 import kebab.Navigator
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
+import kotlin.collections.asSequence
 import kotlin.collections.forEach
+import kotlin.collections.mapOf
 import kotlin.collections.toLinkedMap
+import kotlin.sequences.filter
 
 /**
  * Created by yy_yank on 2015/12/30.
@@ -52,67 +55,96 @@ class DefaultLocator(val locator: SearchContextBasedBasicLocator) : Locator {
 
 }
 
-class SearchContextBasedBasicLocator(val driver: WebDriver, val browserBackedNavigatorFactory: BrowserBackedNavigatorFactory) : BasicLocator {
+interface Func<T>{
+    abstract fun invoke() : T
+    abstract fun invoke1(value : String) : T
+}
 
-    override fun find(attributes: MutableMap<String, Any>, selector: String) : Navigator{
-        val attributesCopy = attributes
-        val selectedUsingBy = findUsingByIfPossible(attributesCopy, selector)
-        if (selectedUsingBy != null) {
-            return selectedUsingBy
-        }
-        val optimizedSelector = optimizeSelector(selector, attributesCopy)
-        return if(optimizedSelector != null){ find(By.cssSelector(optimizedSelector)).filter(attributesCopy) } else { find(attributes)}
-    }
-
-    fun find(attributes: MutableMap<String, Any>) : Navigator {
+class Function<T>(val f: () -> T) : Func<T>{
+    override fun invoke1(value : String): T {
         throw UnsupportedOperationException()
     }
 
-    fun findUsingByIfPossible(attributes: MutableMap<String, Any>, selector: String) : Navigator? {
-        if (attributes.size == 1 && selector == MATCH_ALL_SELECTOR) {
-            // TODO findでごにょごにょ
-//            BY_SELECTING_ATTRIBUTES.findResult {
-//                if (hasStringValueForKey(attributes, it.key)) {
-//                    return find(it.value.call(attributes[it.key]))
-//                }
-//            }
-        }
-        return null
-    }
-
-    /**
-     * Optimizes the selector by translating attributes map into a css attribute selector if possible.
-     * Note this method has a side-effect in that it _removes_ those keys from the predicates map.
-     */
-   fun optimizeSelector(selector: String, attributes: MutableMap<String, Any>) : String{
-        if (selector == null) {
-            return selector
-        }
-
-        val buffer = StringBuilder(selector)
-        attributes.forEach {
-            if (it.key != "text" && it.value is String) {
-                if (it.key == "class") {
-                    // TODO 正規表現でごにょごにょ
-//                    it.value.split(/\s+/).each { className ->
-//                        buffer << "." << CssSelector.escape(className)
-//                    }
-                } else {
-//                    buffer << """[${attribute.key}="${CssSelector.escape(attribute.value)}"]"""
-                }
-                attributes.remove(it.key)
-            }
-        }
-
-        if (buffer.substring(0, 1) == MATCH_ALL_SELECTOR && buffer.length > 1) {
-            buffer.deleteCharAt(0)
-        }
-        return buffer.toString()
-    }
-
-    override fun find(bySelector : By) : Navigator {
-        val elements = driver.findElements(bySelector)
-        return browserBackedNavigatorFactory.createFromWebElements(elements)!!
-    }
-
+    override fun invoke() = f()
 }
+class Function1<T>(val f: (value : String) -> T) : Func<T>{
+    override fun invoke(): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun invoke1(value : String) : T = f(value)
+}
+
+class SearchContextBasedBasicLocator(val driver: WebDriver, val browserBackedNavigatorFactory: BrowserBackedNavigatorFactory) : BasicLocator {
+
+
+    val BY_SELECTING_ATTRIBUTES = mapOf<String, Func<*>>(Pair("id", Function1<By>({id ->
+         By.id(id)
+    })), Pair("clazz", Function<java.lang.Class<By>>({
+        By::class.java
+    })),Pair("name", Function1<By>{ name ->
+        By.name(name)
+    }))
+
+        override fun find(attributes: MutableMap<String, Any>, selector: String) : Navigator{
+            val attributesCopy = attributes
+            val selectedUsingBy = findUsingByIfPossible(attributesCopy, selector)
+            if (selectedUsingBy != null) {
+                return selectedUsingBy
+            }
+            val optimizedSelector = optimizeSelector(selector, attributesCopy)
+            return if(optimizedSelector != null){ find(By.cssSelector(optimizedSelector)).filter(attributesCopy) } else { find(attributes)}
+        }
+
+        fun find(attributes: MutableMap<String, Any>) : Navigator {
+            throw UnsupportedOperationException()
+        }
+
+        fun findUsingByIfPossible(attributes: MutableMap<String, Any>, selector: String) : Navigator? {
+            if (attributes.size == 1 && selector == MATCH_ALL_SELECTOR) {
+                // TODO findでごにょごにょ
+                //BY_SELECTING_ATTRIBUTES.asSequence().filter {
+                //    if (hasStringValueForKey(attributes, it.key)) {
+                //        return find(it.value.call(attributes[it.key]))
+                //    }
+                //}
+            }
+            return null
+        }
+
+        /**
+         * Optimizes the selector by translating attributes map into a css attribute selector if possible.
+         * Note this method has a side-effect in that it _removes_ those keys from the predicates map.
+         */
+        fun optimizeSelector(selector: String, attributes: MutableMap<String, Any>) : String{
+            if (selector == null) {
+                return selector
+            }
+
+            val buffer = StringBuilder(selector)
+            attributes.forEach {
+                if (it.key != "text" && it.value is String) {
+                    if (it.key == "class") {
+                        // TODO 正規表現でごにょごにょ
+                        //                    it.value.split(/\s+/).each { className ->
+                        //                        buffer << "." << CssSelector.escape(className)
+                        //                    }
+                    } else {
+                        //                    buffer << """[${attribute.key}="${CssSelector.escape(attribute.value)}"]"""
+                    }
+                    attributes.remove(it.key)
+                }
+            }
+
+            if (buffer.substring(0, 1) == MATCH_ALL_SELECTOR && buffer.length > 1) {
+                buffer.deleteCharAt(0)
+            }
+            return buffer.toString()
+        }
+
+        override fun find(bySelector : By) : Navigator {
+            val elements = driver.findElements(bySelector)
+            return browserBackedNavigatorFactory.createFromWebElements(elements)!!
+        }
+}
+
