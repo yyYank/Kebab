@@ -5,11 +5,13 @@ import kebab.Locator
 import kebab.Navigator
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
+import java.util.regex.Pattern
 import kotlin.collections.asSequence
 import kotlin.collections.forEach
 import kotlin.collections.mapOf
 import kotlin.collections.toLinkedMap
 import kotlin.sequences.filter
+import kotlin.text.split
 
 /**
  * Created by yy_yank on 2015/12/30.
@@ -126,11 +128,10 @@ class SearchContextBasedBasicLocator(val driver: WebDriver, val browserBackedNav
                 if (it.key != "text" && it.value is String) {
                     if (it.key == "class") {
                         // TODO 正規表現でごにょごにょ
-                        //                    it.value.split(/\s+/).each { className ->
-                        //                        buffer << "." << CssSelector.escape(className)
-                        //                    }
+//                        it.value.toString().split(Pattern.compile("/\s+/"), 0).forEach { className ->
+//                            CssSelector.escape(className)
                     } else {
-                        //                    buffer << """[${attribute.key}="${CssSelector.escape(attribute.value)}"]"""
+//                        buffer << """[${attribute.key}="${CssSelector.escape(attribute.value)}"]"""
                     }
                     attributes.remove(it.key)
                 }
