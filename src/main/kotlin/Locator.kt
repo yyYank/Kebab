@@ -58,34 +58,18 @@ class DefaultLocator(val locator: SearchContextBasedBasicLocator) : Locator {
 
 }
 
-interface Func<T>{
-    abstract fun invoke() : T
-    abstract fun invoke1(value : String) : T
-}
-
-class Function<T>(val f: () -> T) : Func<T>{
-    override fun invoke1(value : String): T {
-        throw UnsupportedOperationException()
-    }
-
-    override fun invoke() = f()
-}
-class Function1<T>(val f: (value : String) -> T) : Func<T>{
-    override fun invoke(): T {
-        throw UnsupportedOperationException()
-    }
-
-    override fun invoke1(value : String) : T = f(value)
+class ByFunction (val f : (value : String) -> By) {
+    fun invoke(value : String): By = f(value)
 }
 
 class SearchContextBasedBasicLocator(val driver: WebDriver, val browserBackedNavigatorFactory: BrowserBackedNavigatorFactory) : BasicLocator {
 
 
-    val BY_SELECTING_ATTRIBUTES = mapOf<String, Func<*>>(Pair("id", Function1<By>({id ->
-         By.id(id)
-    })), Pair("clazz", Function<java.lang.Class<By>>({
-        By::class.java
-    })),Pair("name", Function1<By>{ name ->
+    val BY_SELECTING_ATTRIBUTES = mapOf<String, ByFunction>(Pair("id", ByFunction({ id ->
+        By.id(id)
+    })), Pair("clazz", ByFunction({name ->
+        By.className(name)
+    })),Pair("name", ByFunction { name ->
         By.name(name)
     }))
 
@@ -105,10 +89,10 @@ class SearchContextBasedBasicLocator(val driver: WebDriver, val browserBackedNav
 
         fun findUsingByIfPossible(attributes: MutableMap<String, Any>, selector: String) : Navigator? {
             if (attributes.size == 1 && selector == MATCH_ALL_SELECTOR) {
-                // TODO findでごにょごにょ
                 BY_SELECTING_ATTRIBUTES.asSequence().forEach {
+                    // TODO hasStringValueForKeyで型安全なんだが as 使うのやだな
                     if (hasStringValueForKey(attributes, it.key)) {
-//                        return find(it.value.invoke(attributes[it.key]))
+                        return find(it.value.invoke(attributes[it.key] as String))
                     }
                 }
             }
