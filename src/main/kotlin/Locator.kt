@@ -11,6 +11,7 @@ import kotlin.collections.forEach
 import kotlin.collections.mapOf
 import kotlin.collections.toLinkedMap
 import kotlin.sequences.filter
+import kotlin.sequences.forEach
 import kotlin.text.split
 
 /**
@@ -105,14 +106,17 @@ class SearchContextBasedBasicLocator(val driver: WebDriver, val browserBackedNav
         fun findUsingByIfPossible(attributes: MutableMap<String, Any>, selector: String) : Navigator? {
             if (attributes.size == 1 && selector == MATCH_ALL_SELECTOR) {
                 // TODO findでごにょごにょ
-                //BY_SELECTING_ATTRIBUTES.asSequence().filter {
-                //    if (hasStringValueForKey(attributes, it.key)) {
-                //        return find(it.value.call(attributes[it.key]))
-                //    }
-                //}
+                BY_SELECTING_ATTRIBUTES.asSequence().forEach {
+                    if (hasStringValueForKey(attributes, it.key)) {
+//                        return find(it.value.invoke(attributes[it.key]))
+                    }
+                }
             }
             return null
         }
+
+    fun hasStringValueForKey(attributes: MutableMap<String, Any>, key : String) = attributes.containsKey(key) && attributes[key] is String
+
 
         /**
          * Optimizes the selector by translating attributes map into a css attribute selector if possible.
