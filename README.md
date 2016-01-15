@@ -3,6 +3,11 @@
 Kebab is a browser automation solution. It brings together the power of WebDriver, the robustness of Page Object modelling and the expressiveness of the Kotlin language.
 not Groovy.
 
+# Kebab VS Geb
+
+The different point is Kebab is light weight.
+Geb has wide range feature. But Kebab is simple feature,not exhaustive.
+
 # How to contribute
 
 ## Build Environment
