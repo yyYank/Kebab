@@ -124,7 +124,7 @@ class Browser {
      * Sends the browser to the configured {@link #getBaseUrl() base url}, appending {@code params} as
      * query parameters.
      */
-    fun go(params : kotlin.Map<String, Any>) {
+    fun go(params : Map<String, Any>) {
         go(params, "")
     }
 
@@ -138,7 +138,7 @@ class Browser {
     /**
      * Sends the browser to the given url. If it is relative it is resolved against the {@link #getBaseUrl() base url}.
      */
-    fun go(params : kotlin.Map<String, Any>, url : String) {
+    fun go(params : Map<String, Any>, url : String) {
         val newUrl = calculateUri(url, params)
         val currentUrl = config.driver.currentUrl
         if (currentUrl == newUrl) {
@@ -148,7 +148,7 @@ class Browser {
         }
     }
 
-    fun calculateUri(path : String, params : kotlin.Map<String, Any>) : String {
+    fun calculateUri(path : String, params : Map<String, Any>) : String {
         var uri = URI(path)
         if (uri.isAbsolute) {
             uri = URI(config.baseUrl).resolve(uri)
@@ -158,7 +158,7 @@ class Browser {
         return URL(uri.toString() + joiner + queryString).toString()
     }
 
-    fun toQueryString(params : kotlin.Map<String, Any>) : String{
+    fun toQueryString(params : Map<String, Any>) : String{
         // TODO 元の実装がcollectMany{name,values -> values.collect{v->....なので「key:value = 1:N」にしないとダメっぽい
         return params.asSequence().map { m -> URLEncoder.encode(m.key, UTF8) + "=" + URLEncoder.encode(m.value.toString(), UTF8)}.joinToString {"&"}
     }
