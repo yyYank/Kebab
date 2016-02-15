@@ -6,7 +6,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.0-beta-4584'
+    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.0'
   }
 }
 
@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-  compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.0-beta-4584'
+  compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.0'
   compile 'org.seleniumhq.selenium:selenium-java:2.48.2'
   testCompile 'junit:junit:4.12'
 }
