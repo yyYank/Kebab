@@ -3,6 +3,7 @@ package kebab.junit4
 import kotlin.properties.Delegates
 import kebab.Browser
 import kebab.Configuration
+import kebab.configuration
 import org.junit.After
 import org.junit.Test
 import org.junit.Assert.*
@@ -19,14 +20,28 @@ import java.util.concurrent.TimeUnit
 class KebabTest {
     val kebabConfEnv : String by Delegates.notNull()
     val kebabConfScript : String by Delegates.notNull()
-    var config : Configuration by Delegates.notNull<Configuration>()
+    init {
+        System.setProperty("webdriver.chrome.driver", "driver/chromedriver")
+    }
+
+    val config: Configuration by lazy {
+        configuration {
+            baseUrl = "http://www.google.co.jp/"
+
+            driver = ChromeDriver()
+
+            options {
+                timeout {
+                    implicitlyWait = 10L to TimeUnit.SECONDS
+                }
+            }
+        }
+    }
+
     var browser : Browser by Delegates.notNull<Browser>()
 
     @Before
     fun setup(){
-        System.setProperty("webdriver.chrome.driver", "driver/chromedriver")
-        config = Configuration("http://www.google.co.jp/", ChromeDriver())
-        config.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS)
         browser = Browser(config)
     }
 

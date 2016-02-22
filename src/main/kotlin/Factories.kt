@@ -102,7 +102,6 @@ class NavigatorBackedNavigatorFactory(newBase: Navigator, innerNavigatorFactory:
 
 interface InnerNavigatorFactory {
     fun createNavigator(browser: Browser, filtered: ArrayList<WebElement>) : Navigator?
-
 }
 
 

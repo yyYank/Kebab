@@ -22,19 +22,17 @@ import kotlin.sequences.mapTo
  * Browser objects dynamically delegate all method calls and property read/writes that it doesn't implement to the current
  * page instance via {@code propertyMissing ( )} and {@code methodMissing ( )}.
  */
-class Browser {
+class Browser(val config: Configuration) {
     // UTF-8の定数
     val UTF8 = "UTF-8"
-    // コンフィグ
-    var config : Configuration by Delegates.notNull<Configuration>()
     // ページオブジェクト
     val page = Page()
     // ページの変化通知リスナ
-    val pageChangeListeners = LinkedHashSet<String>();
+    val pageChangeListeners = LinkedHashSet<String>()
     // レポートを書き込むディレクトリパス
     var reportGroup : String? = null
     // ナビゲータのファクトリ。ナビゲータはページのナビゲートをするんだろな
-    var navigatorFactory : NavigatorFactory  by Delegates.notNull<NavigatorFactory>()
+    val navigatorFactory : NavigatorFactory
 
     /**
      * If the driver is remote, this object allows access to its capabilities (users of Kebab should not access this object, it is used internally).
@@ -43,30 +41,11 @@ class Browser {
     // @Lazy
     // val augmentedDriver : WebDriver = RemoteDriverOperation(this.javaClass.classLoader).getAugmentedDriver(config.driver)
 
-
-    /**
-     * Create a new browser with a default configuration loader, loading the default configuration file.
-     *
-     * @see kebab.ConfigurationLoader
-     */
-    constructor() {
-        this(ConfigurationLoader().conf)
+    init {
+        navigatorFactory = config.createNavigatorFactory(this)
     }
 
-    private operator fun invoke(conf: Configuration) {
-        this.config = conf
-    }
-
-    /**
-     * Create a new browser backed by the given configuration.
-     *
-     * @see kebab.Configuration
-     */
-    constructor(config : Configuration) {
-        this.config = config
-        this.navigatorFactory = config.createNavigatorFactory(this)
-    }
-
+    constructor(): this(ConfigurationLoader().conf){}
 
     /**
      * Creates a new browser object via the default constructor and executes the closure
@@ -107,7 +86,7 @@ class Browser {
             // 画面遷移
             browser.go(url)
             // TODO scriptのdelegateをbrowserに。
-            //  script.delegate = browser
+            // script.delegate = browser
             browser.page.script()
             return browser
         }

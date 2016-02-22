@@ -12,7 +12,6 @@ fun configuration(init: Configuration.() -> Unit): Configuration {
 }
 
 class Configuration() {
-
     lateinit var baseUrl: String
 
     lateinit var driver:WebDriver
@@ -40,49 +39,15 @@ class Configuration() {
      * @return
      */
     fun createNavigatorFactory(browser: Browser): NavigatorFactory {
-        val navigatorFactory = readValue("navigatorFactory", null)
-        if (navigatorFactory == null) {
-            return BrowserBackedNavigatorFactory(browser, getInnerNavigatorFactory())
-        } else {
-            val result = navigatorFactory.getBase()
-            if (result is NavigatorFactory) {
-                return result
+        return readValue("navigatorFactory", browser, null)?.let {
+            val result = it.getBase()
+            when(result) {
+                is NavigatorFactory -> result as NavigatorFactory
+                else -> throw InvalidGebConfiguration("navigatorFactory is '$it', it should be a Closure that returns a NavigatorFactory implementation")
             }
-
-            throw InvalidGebConfiguration("navigatorFactory is '${navigatorFactory}', it should be a Closure that returns a NavigatorFactory implementation")
-        }
-        return BrowserBackedNavigatorFactory(browser, getInnerNavigatorFactory())
+        } ?: BrowserBackedNavigatorFactory(browser, DefaultInnerNavigatorFactory())
     }
+    private fun readValue(key: String, browser: Browser, defaultValue: NavigatorFactory?): NavigatorFactory? =
+            rawConfig.getOrDefault(key, defaultValue)
 
-    private fun readValue(key: String, defaultValue : NavigatorFactory?) =
-            if (rawConfig.containsKey(key)) {
-                rawConfig.get(key)
-            } else {
-                defaultValue
-            }
-    /**
-     * Returns the inner navigatory factory, that turns WebElements into Navigators.
-     *
-     * Returns {@link DefaultInnerNavigatorFactory} instances by default.
-     * <p>
-     * To override, set 'innerNavigatorFactory' to:
-     * <ul>
-     * <li>An instance of {@link InnerNavigatorFactory}
-     * <li>A Closure, that has the signature ({@link Browser}, List<{@link org.openqa.selenium.WebElement}>)
-     * </ul>
-     *
-     * @return The inner navigator factory.
-     */
-    fun getInnerNavigatorFactory() : InnerNavigatorFactory {
-        val innerNavigatorFactory = readValue("innerNavigatorFactory", null)
-        if (innerNavigatorFactory == null) {
-            return DefaultInnerNavigatorFactory()
-        } else if (innerNavigatorFactory is InnerNavigatorFactory) {
-            return innerNavigatorFactory
-            //        } else if (innerNavigatorFactory is Closure) {
-            //            ClosureInnerNavigatorFactory(innerNavigatorFactory)
-        } else {
-            throw InvalidGebConfiguration("innerNavigatorFactory is '${innerNavigatorFactory}', it should be a Closure or InnerNavigatorFactory implementation")
-        }
-    }
 }
