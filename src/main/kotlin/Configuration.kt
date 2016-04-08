@@ -48,6 +48,6 @@ class Configuration() {
         } ?: BrowserBackedNavigatorFactory(browser, DefaultInnerNavigatorFactory())
     }
     private fun readValue(key: String, browser: Browser, defaultValue: NavigatorFactory?): NavigatorFactory? =
-            rawConfig.getOrDefault(key, defaultValue)
+            rawConfig.get(key) ?: defaultValue
 
 }
