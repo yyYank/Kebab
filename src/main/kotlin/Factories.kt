@@ -16,15 +16,14 @@ import kotlin.sequences.forEach
  */
 
 
-
-interface NavigatorFactory{
+interface NavigatorFactory {
     val innerNavigatorFactory: InnerNavigatorFactory
 
-    fun getBase() : Navigator?
-    fun getLocator() : Locator
-    fun createFromWebElements(elements : Iterable<WebElement> ) : Navigator?
-    fun createFromNavigators(navigators : Iterable<Navigate> ) : Navigator
-    fun relativeTo(newBase : Navigator) : NavigatorFactory
+    fun getBase(): Navigator?
+    fun getLocator(): Locator
+    fun createFromWebElements(elements: Iterable<WebElement>): Navigator?
+    fun createFromNavigators(navigators: Iterable<Navigate>): Navigator
+    fun relativeTo(newBase: Navigator): NavigatorFactory
 }
 
 class BrowserBackedNavigatorFactory(browser: Browser, innerNavigatorFactory: InnerNavigatorFactory) : AbstractNavigatorFactory(browser, innerNavigatorFactory) {
@@ -38,11 +37,11 @@ class BrowserBackedNavigatorFactory(browser: Browser, innerNavigatorFactory: Inn
     }
 
     override fun getLocator(): Locator = locator
-    fun createBase() : Navigator? =
-        createFromWebElements(Collections.singletonList(browser.config.driver.findElement(By.tagName(baseTagName))))
+    fun createBase(): Navigator? =
+            createFromWebElements(Collections.singletonList(browser.config.driver.findElement(By.tagName(baseTagName))))
 
 
-    override fun getBase() : Navigator? {
+    override fun getBase(): Navigator? {
         val baseNavigatorWaiting = browser.config.baseNavigatorWaiting
         if (baseNavigatorWaiting == null) {
             // TODO waitForが謎。というか、baseNavigatorWaitingの型が謎
@@ -55,11 +54,9 @@ class BrowserBackedNavigatorFactory(browser: Browser, innerNavigatorFactory: Inn
 }
 
 
+open abstract class AbstractNavigatorFactory(val browser: Browser, override val innerNavigatorFactory: InnerNavigatorFactory) : NavigatorFactory {
 
-
-open abstract class AbstractNavigatorFactory (val browser : Browser, override val innerNavigatorFactory : InnerNavigatorFactory) : NavigatorFactory {
-
-    override fun createFromWebElements(elements : Iterable<WebElement>)  : Navigator? {
+    override fun createFromWebElements(elements: Iterable<WebElement>): Navigator? {
         val filtered = ArrayList<WebElement>()
         elements.asSequence().forEach {
             if (it != null) {
@@ -68,10 +65,11 @@ open abstract class AbstractNavigatorFactory (val browser : Browser, override va
         }
         return innerNavigatorFactory.createNavigator(browser, filtered)
     }
-    override fun relativeTo(newBase : Navigator) : NavigatorFactory = NavigatorBackedNavigatorFactory(newBase, innerNavigatorFactory)
+
+    override fun relativeTo(newBase: Navigator): NavigatorFactory = NavigatorBackedNavigatorFactory(newBase, innerNavigatorFactory)
 }
 
-class NavigatorBackedNavigatorFactory(newBase: Navigator, innerNavigatorFactory: InnerNavigatorFactory) : NavigatorFactory{
+class NavigatorBackedNavigatorFactory(newBase: Navigator, innerNavigatorFactory: InnerNavigatorFactory) : NavigatorFactory {
 
     // TODO UnsupportedOperationExceptionの山
 
@@ -101,14 +99,18 @@ class NavigatorBackedNavigatorFactory(newBase: Navigator, innerNavigatorFactory:
 }
 
 interface InnerNavigatorFactory {
-    fun createNavigator(browser: Browser, filtered: ArrayList<WebElement>) : Navigator?
+    fun createNavigator(browser: Browser, filtered: ArrayList<WebElement>): Navigator?
 }
 
 
-class DefaultInnerNavigatorFactory : InnerNavigatorFactory{
+class DefaultInnerNavigatorFactory : InnerNavigatorFactory {
     override fun createNavigator(browser: Browser, elements: ArrayList<WebElement>): Navigator? {
         // TODO Locator
-        return if(elements != null) { NonEmptyNavigator(browser, elements, EmptyLocator())} else { EmptyNavigator(browser, elements, EmptyLocator()) }
+        return if (elements != null) {
+            NonEmptyNavigator(browser, elements, EmptyLocator())
+        } else {
+            EmptyNavigator(browser, elements, EmptyLocator())
+        }
     }
 
 }

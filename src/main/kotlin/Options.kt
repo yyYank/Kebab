@@ -26,5 +26,5 @@ class Options {
 }
 
 class Timeout {
-      var implicitlyWait: Pair<Long, TimeUnit>? = null
+    var implicitlyWait: Pair<Long, TimeUnit>? = null
 }

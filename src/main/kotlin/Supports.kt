@@ -6,7 +6,7 @@ package kebab
 import org.openqa.selenium.By
 
 class UninitializedNavigableSupport(page: Page) : Navigable {
-    override fun find(attributes: MutableMap<String, Any>, selector: String, range: ClosedRange<Int>) : Navigator {
+    override fun find(attributes: MutableMap<String, Any>, selector: String, range: ClosedRange<Int>): Navigator {
         throw UnsupportedOperationException()
     }
 
@@ -85,7 +85,7 @@ interface AlertAndConfirmSupport {
 
 }
 
-class UninitializedAlertAndConfirmSupport(page : Page) : AlertAndConfirmSupport {
+class UninitializedAlertAndConfirmSupport(page: Page) : AlertAndConfirmSupport {
 
 }
 
@@ -93,9 +93,9 @@ class TextMatchingSupport {
 
 }
 
-class UninitializedWaitingSupport(page : Page) : WaitingSupport
-class UninitializedDownloadSupport(page : Page) : DownloadSupport
-class UninitializedPageContentSupport(page : Page) : PageContentSupport
+class UninitializedWaitingSupport(page: Page) : WaitingSupport
+class UninitializedDownloadSupport(page: Page) : DownloadSupport
+class UninitializedPageContentSupport(page: Page) : PageContentSupport
 
 interface WaitingSupport {
 
@@ -105,7 +105,7 @@ interface DownloadSupport {
 
 }
 
-interface PageContentSupport{
+interface PageContentSupport {
 
 }
 
@@ -159,7 +159,7 @@ interface FrameSupport {
 }
 
 class NavigableSupport(val navigatorFactory: NavigatorFactory) : Navigable {
-    override fun find(attributes: MutableMap<String, Any>, selector: String, range: ClosedRange<Int>) : Navigator {
+    override fun find(attributes: MutableMap<String, Any>, selector: String, range: ClosedRange<Int>): Navigator {
         throw UnsupportedOperationException()
     }
 

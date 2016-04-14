@@ -14,7 +14,7 @@ fun configuration(init: Configuration.() -> Unit): Configuration {
 class Configuration() {
     lateinit var baseUrl: String
 
-    lateinit var driver:WebDriver
+    lateinit var driver: WebDriver
 
     lateinit var options: Options
 
@@ -41,12 +41,13 @@ class Configuration() {
     fun createNavigatorFactory(browser: Browser): NavigatorFactory {
         return readValue("navigatorFactory", browser, null)?.let {
             val result = it.getBase()
-            when(result) {
+            when (result) {
                 is NavigatorFactory -> result as NavigatorFactory
                 else -> throw InvalidGebConfiguration("navigatorFactory is '$it', it should be a Closure that returns a NavigatorFactory implementation")
             }
         } ?: BrowserBackedNavigatorFactory(browser, DefaultInnerNavigatorFactory())
     }
+
     private fun readValue(key: String, browser: Browser, defaultValue: NavigatorFactory?): NavigatorFactory? =
             rawConfig.get(key) ?: defaultValue
 
