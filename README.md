@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 
 ![Kebab](./images/kebab.png)
 
 
+=======
+![Kebab](./images/kebab.png)
+
+>>>>>>> 9cce4e8858d64518d77497672c61a84ddb933dfd
 # Kebab [![Circle CI](https://circleci.com/gh/yyYank/Kebab/tree/master.svg?style=shield)](https://circleci.com/gh/yyYank/Kebab/tree/master) 
 
 Kebab is a browser automation solution. It brings together the power of WebDriver, the robustness of Page Object modelling and the expressiveness of the Kotlin language.
