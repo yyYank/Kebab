@@ -7,7 +7,8 @@ import kebab.Configuration
  */
 interface PageContentContainer {
 }
-// TODO ページコンテナ実装
+
+
 class DefaultPageContentContainer : PageContentContainer {
 }
 
