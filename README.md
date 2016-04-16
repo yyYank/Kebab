@@ -11,6 +11,32 @@ Experimental version
 
 It cannot recommended to use in production now.
 
+# Usage
+
+## Configuration
+
+    val config: Configuration by lazy {
+        configuration {
+            baseUrl = "http://www.google.co.jp/"
+
+            driver = ChromeDriver()
+
+            options {
+                timeout {
+                    implicitlyWait = 10L to TimeUnit.SECONDS
+                }
+            }
+        }
+    }
+
+## Browser Test
+
+    browser.drive("http://www.google.co.jp/", {
+            assertEquals("Google", title)
+            val searchButton = find(By.cssSelector(".jsb > center:nth-child(1) > input:nth-child(1)"))
+            searchButton.click()
+        })
+    browser.quit()
 
 
 # Kebab VS Geb
