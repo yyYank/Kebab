@@ -93,12 +93,52 @@ class TextMatchingSupport {
 
 }
 
-class UninitializedWaitingSupport(page: Page) : WaitingSupport
+class UninitializedWaitingSupport(page: Page) : WaitingSupport {
+    override fun <T> waitFor(f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(waitPreset: String, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(params: Map<String, Any>, waitPreset: String, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(params: Map<String, Any>, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(timeout: Double, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(params: Map<String, Any>, timeout: Double, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(timeout: Double, interval: Double, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(params: Map<String, Any>, timeout: Double, interval: Double, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+}
+
 class UninitializedDownloadSupport(page: Page) : DownloadSupport
 class UninitializedPageContentSupport(page: Page) : PageContentSupport
 
 interface WaitingSupport {
-
+    fun <T> waitFor(waitPreset : String, f : () -> T) : T
+    fun <T> waitFor(params : Map<String,Any>, waitPreset : String, f : () -> T) : T
+    fun <T> waitFor(f : () -> T) : T
+    fun <T> waitFor(params : Map<String,Any>, f : () -> T) : T
+    fun <T> waitFor(timeout : Double, f : () -> T) : T
+    fun <T> waitFor(params : Map<String,Any>, timeout : Double,  f : () -> T) : T
+    fun <T> waitFor(timeout : Double, interval : Double,  f : () -> T) : T
+    fun <T> waitFor(params : Map<String,Any>, timeout : Double, interval : Double,  f : () -> T) : T
 }
 
 interface DownloadSupport {
@@ -106,10 +146,6 @@ interface DownloadSupport {
 }
 
 interface PageContentSupport {
-
-}
-
-interface WatingSupport {
 
 }
 
@@ -234,6 +270,37 @@ class NavigableSupport(val navigatorFactory: NavigatorFactory) : Navigable {
 }
 
 class DefaultWaitingSupport(config: Configuration) : WaitingSupport {
+    override fun <T> waitFor(params: Map<String, Any>, waitPreset: String, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(params: Map<String, Any>, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(timeout: Double, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(params: Map<String, Any>, timeout: Double, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(timeout: Double, interval: Double, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(params: Map<String, Any>, timeout: Double, interval: Double, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(waitPreset: String, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
 
 }
 

@@ -24,7 +24,7 @@ class Configuration() {
         this.options = options
     }
 
-    val baseNavigatorWaiting: Wait<Any>? = null
+    lateinit var baseNavigatorWaiting: WaitingSupport
     val rawConfig = HashMap<String, NavigatorFactory>()
 
     /**

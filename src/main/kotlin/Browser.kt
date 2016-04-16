@@ -51,8 +51,6 @@ class Browser(val config: Configuration) {
         browser.page.url = url
         // 画面遷移
         browser.go(url)
-        // TODO scriptのdelegateをbrowserに。
-        // script.delegate = browser
         browser.page.script()
         return browser
     }

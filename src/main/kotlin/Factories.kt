@@ -45,7 +45,7 @@ class BrowserBackedNavigatorFactory(browser: Browser, innerNavigatorFactory: Inn
         val baseNavigatorWaiting = browser.config.baseNavigatorWaiting
         if (baseNavigatorWaiting == null) {
             // TODO waitForが謎。というか、baseNavigatorWaitingの型が謎
-            // baseNavigatorWaiting.waitFor { createBase() }
+             baseNavigatorWaiting.waitFor { createBase() }
         } else {
             return createBase()
         }
@@ -105,7 +105,6 @@ interface InnerNavigatorFactory {
 
 class DefaultInnerNavigatorFactory : InnerNavigatorFactory {
     override fun createNavigator(browser: Browser, elements: ArrayList<WebElement>): Navigator? {
-        // TODO Locator
         return if (elements != null) {
             NonEmptyNavigator(browser, elements, EmptyLocator())
         } else {
