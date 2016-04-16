@@ -4,8 +4,6 @@ import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.Wait
 import java.util.*
-import java.util.jar.Attributes
-import kotlin.collections.first
 
 
 interface Navigator : Iterable<Navigator>, Locator {

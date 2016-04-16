@@ -1,12 +1,43 @@
 package kebab
 
-import kebab.*
 import org.openqa.selenium.By
 
 /**
  * Created by yy_yank on 2015/12/19.
  */
-class Page : Navigatable, PageContainer, Initializable, WatingSupport {
+class Page : Navigatable, PageContainer, Initializable, WaitingSupport {
+    override fun <T> waitFor(waitPreset: String, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(params: Map<String, Any>, waitPreset: String, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(params: Map<String, Any>, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(timeout: Double, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(params: Map<String, Any>, timeout: Double, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(timeout: Double, interval: Double, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun <T> waitFor(params: Map<String, Any>, timeout: Double, interval: Double, f: () -> T): T {
+        throw UnsupportedOperationException()
+    }
+
     var at = null
     var url = ""
     var atCheckWaiting = null

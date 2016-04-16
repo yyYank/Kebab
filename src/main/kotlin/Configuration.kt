@@ -1,7 +1,6 @@
 package kebab
 
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.support.ui.Wait
 import java.util.*
 
 fun configuration(init: Configuration.() -> Unit): Configuration {

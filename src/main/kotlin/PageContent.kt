@@ -73,7 +73,7 @@ class PageContentTemplate {
         this.browser = browser
         this.owner = owner
         this.name = name
-//        this.params = PageContentTemplateParams(this, params)
+        //        this.params = PageContentTemplateParams(this, params)
         this.factory = factory
         this.navigatorFactory = navigatorFactory
     }
@@ -84,75 +84,75 @@ class PageContentTemplate {
     fun getConfig() = browser.config
 
 
-//    fun get(args : Any) = params.cache ? fromCache(*args) : create(*args)
+    //    fun get(args : Any) = params.cache ? fromCache(*args) : create(*args)
 
 
-    private fun create(args : Array<Any>) {
+    private fun create(args: Array<Any>) {
         val createAction = {
-//            val factoryReturn = invokeFactory( * args)
-//            val creation = wrapFactoryReturn(factoryReturn, *args)
-//            if (params.required) {
-//                if (creation is TemplateDerivedPageContent) {
-//                    creation.require()
-//                } else if (creation == null) {
-//                    throw RequiredPageValueNotPresent(this, *args)
-//                }
-//            }
-//            creation
+            //            val factoryReturn = invokeFactory( * args)
+            //            val creation = wrapFactoryReturn(factoryReturn, *args)
+            //            if (params.required) {
+            //                if (creation is TemplateDerivedPageContent) {
+            //                    creation.require()
+            //                } else if (creation == null) {
+            //                    throw RequiredPageValueNotPresent(this, *args)
+            //                }
+            //            }
+            //            creation
         }
 
-//        val wait = config.getWaitForParam(params.wait)
-//        if (wait) {
-//            try {
-//                wait.waitFor(createAction)
-//            } catch (WaitTimeoutException e) {
-//                if (params.required) {
-//                    throw e
-//                }
-//                e.lastEvaluationValue
-//            }
-//        } else {
-//            createAction()
-//        }
+        //        val wait = config.getWaitForParam(params.wait)
+        //        if (wait) {
+        //            try {
+        //                wait.waitFor(createAction)
+        //            } catch (WaitTimeoutException e) {
+        //                if (params.required) {
+        //                    throw e
+        //                }
+        //                e.lastEvaluationValue
+        //            }
+        //        } else {
+        //            createAction()
+        //        }
     }
 
-    private fun fromCache(args : Array<Any>) {
+    private fun fromCache(args: Array<Any>) {
         val argsHash = Arrays.deepHashCode(args)
-//        if (!cache.containsKey(argsHash)) {
-//            cache[argsHash] = create(*args)
-//        }
-//        return cache[argsHash]
+        //        if (!cache.containsKey(argsHash)) {
+        //            cache[argsHash] = create(*args)
+        //        }
+        //        return cache[argsHash]
     }
 
-//    private fun invokeFactory(args : Array<Any>) {
-//        factory.delegate = createFactoryDelegate(args)
-//        factory.resolveStrategy = Closure.DELEGATE_FIRST
-//        factory(*args)
-//    }
+    //    private fun invokeFactory(args : Array<Any>) {
+    //        factory.delegate = createFactoryDelegate(args)
+    //        factory.resolveStrategy = Closure.DELEGATE_FIRST
+    //        factory(*args)
+    //    }
 
-    private fun createFactoryDelegate( args : Array<Any>) {
+    private fun createFactoryDelegate(args: Array<Any>) {
         PageContentTemplateFactoryDelegate(this, args)
     }
 
-    private fun <T> wrapFactoryReturn(factoryReturn : T,  args : Array<Any>){
-//        if (factoryReturn is Module) {
-//            factoryReturn.init(this, args)
-//        }
-//        if (factoryReturn is Navigator) {
-//            return TemplateDerivedPageContent(browser, this, factoryReturn, *args)
-//        } else {
-//            return factoryReturn
-//        }
-//    }
+    private fun <T> wrapFactoryReturn(factoryReturn: T, args: Array<Any>) {
+        //        if (factoryReturn is Module) {
+        //            factoryReturn.init(this, args)
+        //        }
+        //        if (factoryReturn is Navigator) {
+        //            return TemplateDerivedPageContent(browser, this, factoryReturn, *args)
+        //        } else {
+        //            return factoryReturn
+        //        }
+        //    }
     }
 
-class TemplateDerivedPageContent {
+    class TemplateDerivedPageContent {
 
-}
+    }
 
-class PageContentTemplateFactoryDelegate(pageContentTemplate: PageContentTemplate, args: Array<Any>) {
+    class PageContentTemplateFactoryDelegate(pageContentTemplate: PageContentTemplate, args: Array<Any>) {
 
-}
+    }
 
-class PageContentTemplateParams(val template: PageContentTemplate, val params: PageContentTemplateParams) {
+    class PageContentTemplateParams(val template: PageContentTemplate, val params: PageContentTemplateParams) {}
 }

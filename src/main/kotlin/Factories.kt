@@ -1,15 +1,8 @@
 package kebab
 
-import kebab.Navigate
 import org.openqa.selenium.By
-import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import java.util.*
-import kotlin.collections.asSequence
-import kotlin.collections.first
-import kotlin.collections.firstOrNull
-import kotlin.properties.Delegates
-import kotlin.sequences.forEach
 
 /**
  * Created by yy_yank on 2015/12/19.
@@ -44,7 +37,7 @@ class BrowserBackedNavigatorFactory(browser: Browser, innerNavigatorFactory: Inn
     override fun getBase(): Navigator? {
         val baseNavigatorWaiting = browser.config.baseNavigatorWaiting
         if (baseNavigatorWaiting == null) {
-             baseNavigatorWaiting.waitFor { createBase() }
+            baseNavigatorWaiting.waitFor { createBase() }
         } else {
             return createBase()
         }
