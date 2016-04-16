@@ -44,7 +44,6 @@ class BrowserBackedNavigatorFactory(browser: Browser, innerNavigatorFactory: Inn
     override fun getBase(): Navigator? {
         val baseNavigatorWaiting = browser.config.baseNavigatorWaiting
         if (baseNavigatorWaiting == null) {
-            // TODO waitForが謎。というか、baseNavigatorWaitingの型が謎
              baseNavigatorWaiting.waitFor { createBase() }
         } else {
             return createBase()

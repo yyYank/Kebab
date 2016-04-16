@@ -87,22 +87,21 @@ class PageContentTemplate {
 //    fun get(args : Any) = params.cache ? fromCache(*args) : create(*args)
 
 
-//    private create(Object[] args)
-//    {
-//        def createAction = {
-//            def factoryReturn = invokeFactory( * args)
-//            def creation = wrapFactoryReturn(factoryReturn, *args)
+    private fun create(args : Array<Any>) {
+        val createAction = {
+//            val factoryReturn = invokeFactory( * args)
+//            val creation = wrapFactoryReturn(factoryReturn, *args)
 //            if (params.required) {
-//                if (creation instanceof TemplateDerivedPageContent) {
+//                if (creation is TemplateDerivedPageContent) {
 //                    creation.require()
 //                } else if (creation == null) {
-//                    throw new RequiredPageValueNotPresent(this, *args)
+//                    throw RequiredPageValueNotPresent(this, *args)
 //                }
 //            }
 //            creation
-//        }
-//
-//        def wait = config.getWaitForParam(params.wait)
+        }
+
+//        val wait = config.getWaitForParam(params.wait)
 //        if (wait) {
 //            try {
 //                wait.waitFor(createAction)
@@ -115,40 +114,44 @@ class PageContentTemplate {
 //        } else {
 //            createAction()
 //        }
-//    }
-//
-//    private fromCache(Object[] args)
-//    {
-//        def argsHash = Arrays.deepHashCode(args)
+    }
+
+    private fun fromCache(args : Array<Any>) {
+        val argsHash = Arrays.deepHashCode(args)
 //        if (!cache.containsKey(argsHash)) {
 //            cache[argsHash] = create(*args)
 //        }
-//        cache[argsHash]
-//    }
-//
-//    private invokeFactory(Object[] args)
-//    {
+//        return cache[argsHash]
+    }
+
+//    private fun invokeFactory(args : Array<Any>) {
 //        factory.delegate = createFactoryDelegate(args)
 //        factory.resolveStrategy = Closure.DELEGATE_FIRST
 //        factory(*args)
 //    }
-//
-//    private createFactoryDelegate(Object[] args)
-//    {
-//        new PageContentTemplateFactoryDelegate(this, args)
-//    }
-//
-//    private wrapFactoryReturn(factoryReturn, Object[] args)
-//    {
-//        if (factoryReturn instanceof Module) {
+
+    private fun createFactoryDelegate( args : Array<Any>) {
+        PageContentTemplateFactoryDelegate(this, args)
+    }
+
+    private fun <T> wrapFactoryReturn(factoryReturn : T,  args : Array<Any>){
+//        if (factoryReturn is Module) {
 //            factoryReturn.init(this, args)
 //        }
-//        if (factoryReturn instanceof Navigator) {
-//            new TemplateDerivedPageContent(browser, this, factoryReturn, *args)
+//        if (factoryReturn is Navigator) {
+//            return TemplateDerivedPageContent(browser, this, factoryReturn, *args)
 //        } else {
-//            factoryReturn
+//            return factoryReturn
 //        }
 //    }
+    }
+
+class TemplateDerivedPageContent {
+
+}
+
+class PageContentTemplateFactoryDelegate(pageContentTemplate: PageContentTemplate, args: Array<Any>) {
+
 }
 
 class PageContentTemplateParams(val template: PageContentTemplate, val params: PageContentTemplateParams) {
