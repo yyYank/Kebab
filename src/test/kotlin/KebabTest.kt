@@ -52,7 +52,7 @@ class KebabTest {
 
     @Ignore
     @Test
-    fun test(a: String) {
+    fun test() {
         browser.drive("http://www.google.co.jp/", {
             // 画面が表示されていること
             assertEquals("Google", title)
