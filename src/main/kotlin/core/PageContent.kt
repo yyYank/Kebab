@@ -67,13 +67,13 @@ class PageContentTemplate {
     lateinit var params: PageContentTemplateParams
     lateinit var factory: Function<Any>
     lateinit var navigatorFactory: NavigatorFactory
-    val cache = emptyMap<String, Any>()
+    val cache = HashMap<Int, Any>()
 
-    constructor(browser: Browser, owner: PageContentContainer, name: String, params: Map<String, Any>, factory: Function<Any>, navigatorFactory: NavigatorFactory) {
+    constructor(browser: Browser, owner: PageContentContainer, name: String, params: PageContentTemplateParams, factory: Function<Any>, navigatorFactory: NavigatorFactory) {
         this.browser = browser
         this.owner = owner
         this.name = name
-        //        this.params = PageContentTemplateParams(this, params)
+        this.params = PageContentTemplateParams(this, params)
         this.factory = factory
         this.navigatorFactory = navigatorFactory
     }
@@ -84,7 +84,7 @@ class PageContentTemplate {
     fun getConfig() = browser.config
 
 
-    //    fun get(args : Any) = params.cache ? fromCache(*args) : create(*args)
+    fun get(args: Array<Any>) = fromCache(args) ?: create(args)
 
 
     private fun create(args: Array<Any>) {
@@ -116,43 +116,33 @@ class PageContentTemplate {
         //        }
     }
 
-    private fun fromCache(args: Array<Any>) {
+    private fun fromCache(args: Array<Any>): Any {
         val argsHash = Arrays.deepHashCode(args)
-        //        if (!cache.containsKey(argsHash)) {
-        //            cache[argsHash] = create(*args)
-        //        }
-        //        return cache[argsHash]
+        if (!cache.containsKey(argsHash)) {
+            cache.put(argsHash, create(args))
+        }
+        return cache.get(argsHash)!!
     }
 
-    //    private fun invokeFactory(args : Array<Any>) {
-    //        factory.delegate = createFactoryDelegate(args)
-    //        factory.resolveStrategy = Closure.DELEGATE_FIRST
-    //        factory(*args)
-    //    }
-
-    private fun createFactoryDelegate(args: Array<Any>) {
-        PageContentTemplateFactoryDelegate(this, args)
+    private fun invokeFactory(args: Array<Any>) {
+        val delegate = createFactoryDelegate(args)
+//        delegate.
     }
 
-    private fun <T> wrapFactoryReturn(factoryReturn: T, args: Array<Any>) {
-        //        if (factoryReturn is Module) {
-        //            factoryReturn.init(this, args)
-        //        }
-        //        if (factoryReturn is Navigator) {
-        //            return TemplateDerivedPageContent(browser, this, factoryReturn, *args)
-        //        } else {
-        //            return factoryReturn
-        //        }
-        //    }
+    private fun createFactoryDelegate(args: Array<Any>) = PageContentTemplateFactoryDelegate(this, args)
+
+
+    private fun <T> wrapFactoryReturn(factoryReturn: T, args: Array<Any>): Any {
+        if (factoryReturn is Module) {
+            factoryReturn.init(browser, navigatorFactory)
+        }
+        if (factoryReturn is Navigator) {
+            return TemplateDerivedPageContent(browser, this, factoryReturn, args)
+        } else {
+            return factoryReturn as Any
+        }
     }
-
-    class TemplateDerivedPageContent {
-
-    }
-
-    class PageContentTemplateFactoryDelegate(pageContentTemplate: PageContentTemplate, args: Array<Any>) {
-
-    }
-
-    class PageContentTemplateParams(val template: PageContentTemplate, val params: PageContentTemplateParams) {}
 }
+
+class TemplateDerivedPageContent(browser: Browser, pageContentTemplate: PageContentTemplate, module: Any, args: Array<Any>)
+class PageContentTemplateParams(val template: PageContentTemplate, val params: PageContentTemplateParams)
