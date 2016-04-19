@@ -15,6 +15,7 @@ It cannot recommended to use in production now.
 
 ## Configuration
 
+```Kotlin
     val config: Configuration by lazy {
         configuration {
             baseUrl = "http://www.google.co.jp/"
@@ -28,16 +29,18 @@ It cannot recommended to use in production now.
             }
         }
     }
+```
 
 ## Browser Test
 
+```Kotlin
     browser.drive("http://www.google.co.jp/", {
             assertEquals("Google", title)
             val searchButton = find(By.cssSelector(".jsb > center:nth-child(1) > input:nth-child(1)"))
             searchButton.click()
         })
     browser.quit()
-
+```
 
 # Kebab VS Geb
 
@@ -54,8 +57,9 @@ On UNIX type environments this is gradlew and is gradlew.bat on Windows.
 
 For example to run the Kebab test suite for the entire project you would run…
 
-    ./gradlew test
-
+```Gradle
+./gradlew test
+```
 
 # Licence
 
