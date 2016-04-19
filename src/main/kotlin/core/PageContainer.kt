@@ -12,7 +12,5 @@ interface PageContentContainer {
 class DefaultPageContentContainer : PageContentContainer {
 }
 
-class ConfigurationLoader {
-    val conf : Configuration = Configuration()
-}
+
 
