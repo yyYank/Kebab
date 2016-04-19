@@ -15,10 +15,10 @@ class Configuration() {
 
     lateinit var driver: WebDriver
 
-    lateinit var options: Options
+    lateinit var options: ConfigOptions
 
-    fun options(init: Options.() -> Unit) {
-        val options = Options()
+    fun options(init: ConfigOptions.() -> Unit) {
+        val options = ConfigOptions()
         options.init()
         this.options = options
     }

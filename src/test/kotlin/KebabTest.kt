@@ -16,11 +16,7 @@ import kotlin.properties.Delegates
 class KebabTest {
     val kebabConfEnv: String by Delegates.notNull()
     val kebabConfScript: String by Delegates.notNull()
-
-    init {
-        System.setProperty("webdriver.chrome.driver", "driver/chromedriver")
-    }
-
+    var browser: Browser by Delegates.notNull<Browser>()
     val config: Configuration by lazy {
         configuration {
             baseUrl = "http://www.google.co.jp/"
@@ -35,10 +31,10 @@ class KebabTest {
         }
     }
 
-    fun<K, V> Pair<K, V>.should() = this.component1()
-    fun<K, V> Pair<K, V>.be() = this.component2()
+    init {
+        System.setProperty("webdriver.chrome.driver", "driver/chromedriver")
+    }
 
-    var browser: Browser by Delegates.notNull<Browser>()
 
     @Before
     fun setup() {

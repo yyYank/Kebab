@@ -6,7 +6,7 @@ package kebab
 import org.openqa.selenium.WebDriver
 import java.util.concurrent.TimeUnit
 
-class Options {
+class ConfigOptions {
 
     private var timeout:Timeout? = null
 
