@@ -7,3 +7,7 @@ package kebab
 class InvalidGebConfiguration(message: String?) : RuntimeException(message) {
 
 }
+
+class RequiredPageValueNotPresent(pageContentTemplate: PageContentTemplate, args: Array<Any>) : Throwable() {
+
+}

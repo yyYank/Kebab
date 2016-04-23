@@ -106,7 +106,6 @@ class Browser(val config: Configuration) {
     }
 
     fun toQueryString(params: Map<String, Any>): String {
-        // TODO 元の実装がcollectMany{name,values -> values.collect{v->....なので「key:value = 1:N」にしないとダメっぽい
         return params.asSequence().map { m -> URLEncoder.encode(m.key, UTF8) + "=" + URLEncoder.encode(m.value.toString(), UTF8) }.joinToString { "&" }
     }
 

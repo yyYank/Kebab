@@ -81,27 +81,21 @@ class PageContentTemplate {
     override fun toString() = "content template '$name' defined by $owner"
 
 
-    fun getConfig() = browser.config
-
-
     fun get(args: Array<Any>) = fromCache(args) ?: create(args)
 
 
     private fun create(args: Array<Any>) {
         val createAction = {
-            //            val factoryReturn = invokeFactory( * args)
-            //            val creation = wrapFactoryReturn(factoryReturn, *args)
-            //            if (params.required) {
-            //                if (creation is TemplateDerivedPageContent) {
-            //                    creation.require()
-            //                } else if (creation == null) {
-            //                    throw RequiredPageValueNotPresent(this, *args)
-            //                }
-            //            }
-            //            creation
+            val factoryReturn = invokeFactory(args)
+            val creation = wrapFactoryReturn(factoryReturn, args)
+            //                        if (params.required) {
+            if (creation is TemplateDerivedPageContent) {
+                //                                creation.require()
+            } else if (creation == null) {
+                throw RequiredPageValueNotPresent(this, args)
+            }
         }
-
-        //        val wait = config.getWaitForParam(params.wait)
+        //                val wait = browser.config.getWaitForParam(params.wait)
         //        if (wait) {
         //            try {
         //                wait.waitFor(createAction)
@@ -116,6 +110,7 @@ class PageContentTemplate {
         //        }
     }
 
+
     private fun fromCache(args: Array<Any>): Any {
         val argsHash = Arrays.deepHashCode(args)
         if (!cache.containsKey(argsHash)) {
@@ -126,7 +121,7 @@ class PageContentTemplate {
 
     private fun invokeFactory(args: Array<Any>) {
         val delegate = createFactoryDelegate(args)
-//        delegate.
+        //        delegate.
     }
 
     private fun createFactoryDelegate(args: Array<Any>) = PageContentTemplateFactoryDelegate(this, args)

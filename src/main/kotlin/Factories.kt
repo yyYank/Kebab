@@ -157,7 +157,7 @@ class PageContentTemplateFactoryDelegate(pageContentTemplate: PageContentTemplat
     //
     //        module.init(template.browser, moduleBaseNavigatorFactory)
     //        moduleParams.each { name, value ->
-    //            // TODO - catch MPE and provide better error message
+    //            // TODO - catch NPE and provide better error message
     //            module."$name" = value
     //        }
     //
