@@ -86,9 +86,9 @@ class Page : Navigatable, PageContainer, Initializable, WaitingSupport {
     }
 
 
-    //    fun find() = navigableSupport.find()
-    //    fun find(index : Int) = navigableSupport.find(index)
-    //    fun find(range : ClosedRange<Int>) = navigableSupport.find(range)
+    fun find() = navigableSupport.find()
+    fun find(index : Int) = navigableSupport.find(index)
+    fun find(range : ClosedRange<Int>) = navigableSupport.find(range)
     fun find(selector: String) = navigableSupport.find(selector)
 
     fun find(selector: String, index: Int) = navigableSupport.find(selector, index)
