@@ -46,12 +46,14 @@ class KebabTest {
         config.driver.quit()
     }
 
-    @Ignore
+//    @Ignore
     @Test
     fun test() {
         browser.drive("http://www.google.co.jp/", {
             // 画面が表示されていること
             assertEquals("Google", title)
+
+
             // 検索ボタンを押下
             val searchButton = find(By.cssSelector(".jsb > center:nth-child(1) > input:nth-child(1)"))
             // 検索を実行する
