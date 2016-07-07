@@ -42,7 +42,7 @@ class Configuration() {
             val result = it.getBase()
             when (result) {
                 is NavigatorFactory -> result as NavigatorFactory
-                else -> throw InvalidGebConfiguration("navigatorFactory is '$it', it should be a Closure that returns a NavigatorFactory implementation")
+                else -> throw InvalidKebabConfiguration("navigatorFactory is '$it', it should be a Closure that returns a NavigatorFactory implementation")
             }
         } ?: BrowserBackedNavigatorFactory(browser, DefaultInnerNavigatorFactory())
     }

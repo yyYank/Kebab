@@ -52,7 +52,6 @@ class KebabTest {
         browser.drive("http://www.google.co.jp/", {
             // 画面が表示されていること
             assertEquals("Google", title)
-            // TODO ここらへん出来てない
             // 検索ボタンを押下
             val searchButton = find(By.cssSelector(".jsb > center:nth-child(1) > input:nth-child(1)"))
             // 検索を実行する
