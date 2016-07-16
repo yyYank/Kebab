@@ -46,7 +46,7 @@ class KebabTest {
         config.driver.quit()
     }
 
-//    @Ignore
+    @Ignore
     @Test
     fun test() {
         browser.drive("http://www.google.co.jp/", {
