@@ -280,8 +280,10 @@ interface Navigable : Locator {
 
 }
 
+/**
+ * 実装のないLocator.関数を呼び出すとUnsupportedOperationExceptionを投げる.
+ */
 class EmptyLocator : Locator {
-    // TODO UnsupportedOperationExceptionの山
 
     override fun find(attributes: MutableMap<String, Any>): Navigator {
         throw UnsupportedOperationException()
@@ -477,7 +479,12 @@ class NonEmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, l
 
 }
 
+/**
+ * 実装のないNavigator.呼び出すとUnsupportedOperationException
+ */
 class EmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, locator: Locator) : AbstractNavigator(browser, locator) {
+
+
     override fun getAt(index: Int): Navigator {
         throw UnsupportedOperationException()
     }
@@ -485,8 +492,6 @@ class EmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, loca
     override fun getAt(range: ClosedRange<Int>): Navigator {
         throw UnsupportedOperationException()
     }
-
-    // TODO UnsupportedOperationExceptionの山
 
     override fun attr(name: String): String {
         throw UnsupportedOperationException()
