@@ -6,6 +6,9 @@ import org.openqa.selenium.support.ui.Wait
 import java.util.*
 
 
+/**
+ * Navigator.エレメントの基本操作を行う。
+ */
 interface Navigator : Iterable<Navigator>, Locator {
     fun has(selector: String): Navigator
     fun has(predicates: Map<String, Any>, selector: String): Navigator
@@ -272,6 +275,9 @@ interface BasicLocator {
     fun find(attributes: MutableMap<String, Any>, selector: String): Navigator
 }
 
+/**
+ * Navigableインターフェース
+ */
 interface Navigable : Locator {
 
     fun find(): Navigator
@@ -347,6 +353,9 @@ class EmptyLocator : Locator {
 
 }
 
+/**
+ * Navigatorのabstractクラス.
+ */
 abstract class AbstractNavigator(val browser: Browser, val locator: Locator) : Navigator {
 
     abstract fun getElement(index: Int): WebElement
@@ -383,6 +392,9 @@ abstract class AbstractNavigator(val browser: Browser, val locator: Locator) : N
 
 }
 
+/**
+ * 実装を持つNavigatorクラス.
+ */
 class NonEmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, locator: Locator) : AbstractNavigator(browser, locator) {
     override fun getAt(range: ClosedRange<Int>): Navigator {
         throw UnsupportedOperationException()
