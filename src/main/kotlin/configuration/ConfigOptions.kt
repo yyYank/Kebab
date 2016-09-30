@@ -1,7 +1,7 @@
 /**
  * Created by yy_yank on 2016/02/22.
  */
-package kebab
+package kebab.configuration
 
 import org.openqa.selenium.WebDriver
 import java.util.concurrent.TimeUnit

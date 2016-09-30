@@ -1,4 +1,4 @@
-package kebab
+package kebab.configuration
 
 /**
  * Created by yy_yank on 2016/04/20.

@@ -1,8 +1,12 @@
 /**
  * Created by yy_yank on 2015/12/19.
  */
-package kebab
+package kebab.elment
 
+import kebab.Browser
+import kebab.NavigatorFactory
+import kebab.Page
+import kebab.configuration.Configuration
 import org.openqa.selenium.By
 
 class UninitializedNavigableSupport(page: Page) : Navigable {

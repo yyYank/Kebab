@@ -1,4 +1,6 @@
-package kebab
+package kebab.exception
+
+import kebab.PageContentTemplate
 
 /**
  * Created by yy_yank on 2015/12/23.
