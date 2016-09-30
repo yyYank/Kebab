@@ -1,8 +1,8 @@
 package kebab.junit4
 
 import kebab.Browser
-import kebab.Configuration
-import kebab.configuration
+import kebab.configuration.Configuration
+import kebab.configuration.configuration
 import org.junit.*
 import org.junit.Assert.assertEquals
 import org.openqa.selenium.By
