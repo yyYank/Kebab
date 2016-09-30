@@ -1,5 +1,7 @@
 package kebab
 
+import kebab.configuration.Configuration
+import kebab.configuration.ConfigurationLoader
 import java.net.URI
 import java.net.URL
 import java.net.URLEncoder
