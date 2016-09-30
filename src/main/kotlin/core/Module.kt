@@ -1,5 +1,6 @@
 package kebab
 
+import kebab.elment.*
 import org.openqa.selenium.support.ui.Wait
 import kotlin.properties.Delegates
 
