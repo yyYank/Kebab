@@ -103,6 +103,9 @@ interface Navigator : Iterable<Navigator>, Locator {
     fun getAt(index: Int): Navigator
 
     fun getAt(range: ClosedRange<Int>): Navigator
+
+    fun  value(s: String) : Navigator
+
 }
 
 class Navigate {
@@ -396,6 +399,11 @@ abstract class AbstractNavigator(val browser: Browser, val locator: Locator) : N
  * 実装を持つNavigatorクラス.
  */
 class NonEmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, locator: Locator) : AbstractNavigator(browser, locator) {
+    override fun value(s: String): Navigator = apply {
+        elements.first().sendKeys(s)
+        this
+    }
+
     override fun getAt(range: ClosedRange<Int>): Navigator {
         throw UnsupportedOperationException()
     }
@@ -456,9 +464,9 @@ class NonEmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, l
         throw UnsupportedOperationException()
     }
 
-    override fun click(): Navigator {
+    override fun click(): Navigator = apply {
         elements.first { it != null }.click()
-        return this
+        this
     }
 
     override fun click(pageClass: Class<out Page>): Navigator {
@@ -495,6 +503,9 @@ class NonEmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, l
  * 実装のないNavigator.呼び出すとUnsupportedOperationException
  */
 class EmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, locator: Locator) : AbstractNavigator(browser, locator) {
+    override fun value(s: String): Navigator {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 
     override fun getAt(index: Int): Navigator {

@@ -3,11 +3,8 @@ package kebab.junit4
 import kebab.Browser
 import kebab.Configuration
 import kebab.configuration
-import org.junit.After
+import org.junit.*
 import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Ignore
-import org.junit.Test
 import org.openqa.selenium.By
 import org.openqa.selenium.chrome.ChromeDriver
 import java.util.concurrent.TimeUnit
@@ -48,15 +45,31 @@ class KebabTest {
 
     @Ignore
     @Test
-    fun test() {
+    fun Googleで検索してみるよ() {
         browser.drive("http://www.google.co.jp/", {
             // 画面が表示されていること
             assertEquals("Google", title)
-            // 検索ボタンを押下
-            val searchButton = find(By.cssSelector(".jsb > center:nth-child(1) > input:nth-child(1)"))
-            // 検索を実行する
-            searchButton.click()
+            val element = find(By.name("q"));
+            element.value("Kotlin\n"); // send also a "\n"
+            // とりあえずのスリープ
+            TimeUnit.SECONDS.sleep(10)
         })
-        browser.quit()
+    }
+
+    @Ignore
+    @Test
+    fun Googleで検索してみたあとリンクをクリックするよ() {
+        Assert.fail("未実装")
+    }
+
+    @Ignore
+    @Test
+    fun 何かボタンをクリックするよ() {
+        Assert.fail("未実装")
+    }
+
+    @Test
+    fun 画面のレンダリングをウエイトするよ() {
+        Assert.fail("未実装")
     }
 }
