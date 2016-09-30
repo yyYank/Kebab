@@ -4,6 +4,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.Wait
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -399,6 +400,10 @@ abstract class AbstractNavigator(val browser: Browser, val locator: Locator) : N
  * 実装を持つNavigatorクラス.
  */
 class NonEmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, locator: Locator) : AbstractNavigator(browser, locator) {
+
+    /**
+     * 現状実装だとfindしたもののうち表示されているものの一番最初のエレメントをにsendする
+     */
     override fun value(s: String): Navigator = apply {
         elements.first().sendKeys(s)
         this
@@ -464,8 +469,11 @@ class NonEmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, l
         throw UnsupportedOperationException()
     }
 
+    /**
+     * 現状実装だとfindしたもののうち表示されているものの一番最初のエレメントをクリックする
+     */
     override fun click(): Navigator = apply {
-        elements.first { it != null }.click()
+        elements.filter { it.isDisplayed }.first().click()
         this
     }
 
