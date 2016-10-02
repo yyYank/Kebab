@@ -1,5 +1,7 @@
 package kebab
 
+import kebab.core.Browser
+import kebab.core.PageContentTemplate
 import kebab.elment.*
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement

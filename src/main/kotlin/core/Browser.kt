@@ -1,5 +1,6 @@
-package kebab
+package kebab.core
 
+import kebab.NavigatorFactory
 import kebab.configuration.Configuration
 import kebab.configuration.ConfigurationLoader
 import java.net.URI

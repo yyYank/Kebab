@@ -1,6 +1,6 @@
 package kebab.junit4
 
-import kebab.Browser
+import kebab.core.Browser
 import kebab.configuration.Configuration
 import kebab.configuration.configuration
 import org.junit.*

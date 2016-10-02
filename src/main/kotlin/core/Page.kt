@@ -1,12 +1,34 @@
-package kebab
+package kebab.core
 
 import kebab.elment.*
+import kebab.support.alert.AlertAndConfirmSupport
+import kebab.support.alert.DefaultAlertAndConfirmSupport
+import kebab.support.alert.UninitializedAlertAndConfirmSupport
+import kebab.support.download.DefaultDownloadSupport
+import kebab.support.download.DownloadSupport
+import kebab.support.download.UninitializedDownloadSupport
+import kebab.support.frame.DefaultFrameSupport
+import kebab.support.frame.FrameSupport
+import kebab.support.frame.UninitializedFrameSupport
+import kebab.support.interaction.DefaultInteractionsSupport
+import kebab.support.interaction.InteractionsSupport
+import kebab.support.interaction.UninitializedInteractionSupport
+import kebab.support.navigate.NavigableSupport
+import kebab.support.navigate.Navigatable
+import kebab.support.navigate.UninitializedNavigableSupport
+import kebab.support.page.DefaultPageContentSupport
+import kebab.support.page.PageContentSupport
+import kebab.support.page.UninitializedPageContentSupport
+import kebab.support.waiting.DefaultWaitingSupport
+import kebab.support.waiting.UninitializedWaitingSupport
+import kebab.support.waiting.WaitingSupport
 import org.openqa.selenium.By
+import support.text.TextMatchingSupport
 
 /**
  * Created by yy_yank on 2015/12/19.
  */
-class Page : Navigatable, PageContainer, Initializable, WaitingSupport {
+class Page : Navigatable, PageContentContainer, Initializable, WaitingSupport {
     var at = null
     var url = ""
     var atCheckWaiting = null
@@ -108,3 +130,4 @@ class Page : Navigatable, PageContainer, Initializable, WaitingSupport {
     fun getJs() = Any()
 }
 
+interface Initializable{}

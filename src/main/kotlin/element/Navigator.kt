@@ -1,7 +1,7 @@
 package kebab.elment
 
-import kebab.Browser
-import kebab.Page
+import kebab.core.Browser
+import kebab.core.Page
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.Wait

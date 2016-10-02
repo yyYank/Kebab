@@ -1,6 +1,11 @@
-package kebab
+package kebab.core
 
+import kebab.NavigatorFactory
 import kebab.elment.*
+import kebab.support.download.DefaultDownloadSupport
+import kebab.support.frame.DefaultFrameSupport
+import kebab.support.interaction.DefaultInteractionsSupport
+import kebab.support.waiting.DefaultWaitingSupport
 import org.openqa.selenium.support.ui.Wait
 import kotlin.properties.Delegates
 

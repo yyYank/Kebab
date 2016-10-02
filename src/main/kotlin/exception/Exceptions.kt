@@ -1,6 +1,7 @@
 package kebab.exception
 
-import kebab.PageContentTemplate
+import kebab.core.PageContentTemplate
+
 
 /**
  * Created by yy_yank on 2015/12/23.

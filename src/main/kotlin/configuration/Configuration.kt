@@ -1,11 +1,11 @@
 package kebab.configuration
 
-import kebab.Browser
 import kebab.BrowserBackedNavigatorFactory
 import kebab.DefaultInnerNavigatorFactory
 import kebab.NavigatorFactory
-import kebab.elment.WaitingSupport
+import kebab.core.Browser
 import kebab.exception.InvalidKebabConfiguration
+import kebab.support.waiting.WaitingSupport
 import org.openqa.selenium.WebDriver
 import java.util.*
 
