@@ -1,8 +1,8 @@
 package kebab.support.navigate
 
 import kebab.NavigatorFactory
-import kebab.element.Navigable
-import kebab.element.Navigator
+import kebab.navigator.Navigable
+import kebab.navigator.Navigator
 import org.openqa.selenium.By
 
 /**

@@ -2,7 +2,11 @@ package kebab
 
 import kebab.core.Browser
 import kebab.core.PageContentTemplate
-import kebab.element.*
+import kebab.locator.DefaultLocator
+import kebab.navigator.*
+import kebab.locator.EmptyLocator
+import kebab.locator.Locator
+import kebab.locator.SearchContextBasedBasicLocator
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
 import java.util.*

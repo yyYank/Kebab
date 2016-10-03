@@ -1,4 +1,4 @@
-package kebab.element
+package kebab.function
 
 import org.openqa.selenium.By
 

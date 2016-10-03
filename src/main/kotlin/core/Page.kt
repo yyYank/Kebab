@@ -1,6 +1,6 @@
 package kebab.core
 
-import kebab.element.*
+import kebab.navigator.*
 import kebab.support.alert.AlertAndConfirmSupport
 import kebab.support.alert.DefaultAlertAndConfirmSupport
 import kebab.support.alert.UninitializedAlertAndConfirmSupport
