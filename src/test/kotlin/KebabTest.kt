@@ -66,8 +66,9 @@ class KebabTest {
             element.value("Kotlin\n"); // send also a "\n"
 
             TimeUnit.SECONDS.sleep(10)
-            val link = find(By.id("logo"))
-            link.click()
+            //Googleのロゴのエレメント
+            val logo = find(By.id("logo"))
+            logo.click()
 
             // とりあえずのスリープ
             TimeUnit.SECONDS.sleep(10)
@@ -83,6 +84,19 @@ class KebabTest {
     @Ignore
     @Test
     fun 画面のレンダリングをウエイトするよ() {
+        Assert.fail("未実装")
+    }
+
+
+    @Ignore
+    @Test
+    fun 画面のスクリーンショットをとるよ() {
+        Assert.fail("未実装")
+    }
+
+    @Ignore
+    @Test
+    fun JavaScriptを使ってみるよ() {
         Assert.fail("未実装")
     }
 }
