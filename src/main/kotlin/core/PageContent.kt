@@ -5,7 +5,7 @@ package kebab.core
 
 import kebab.NavigatorFactory
 import kebab.PageContentTemplateFactoryDelegate
-import kebab.elment.Navigator
+import kebab.element.Navigator
 import kebab.exception.RequiredPageValueNotPresent
 import java.util.*
 

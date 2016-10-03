@@ -1,6 +1,7 @@
-package kebab.elment
+package kebab.element
 
 import kebab.BrowserBackedNavigatorFactory
+import kebab.element.ByFunction
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 
@@ -48,9 +49,7 @@ class DefaultLocator(val locator: SearchContextBasedBasicLocator) : Locator {
 
 }
 
-class ByFunction(val f: (value: String) -> By) {
-    fun invoke(value: String): By = f(value)
-}
+
 
 class SearchContextBasedBasicLocator(val driver: WebDriver, val browserBackedNavigatorFactory: BrowserBackedNavigatorFactory) : BasicLocator {
 
@@ -299,11 +298,9 @@ interface BasicLocator {
  * Navigableインターフェース
  */
 interface Navigable : Locator {
-
     fun find(): Navigator
     fun find(index: Int): Navigator
     fun find(range: ClosedRange<Int>): Navigator
-
 }
 
 /**

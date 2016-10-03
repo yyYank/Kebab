@@ -2,7 +2,7 @@ package kebab
 
 import kebab.core.Browser
 import kebab.core.PageContentTemplate
-import kebab.elment.*
+import kebab.element.*
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
 import java.util.*

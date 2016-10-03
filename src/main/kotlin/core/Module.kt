@@ -1,7 +1,7 @@
 package kebab.core
 
 import kebab.NavigatorFactory
-import kebab.elment.*
+import kebab.element.*
 import kebab.support.download.DefaultDownloadSupport
 import kebab.support.frame.DefaultFrameSupport
 import kebab.support.interaction.DefaultInteractionsSupport
