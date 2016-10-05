@@ -91,7 +91,22 @@ class KebabTest {
     @Ignore
     @Test
     fun 画面のスクリーンショットをとるよ() {
-        Assert.fail("未実装")
+        browser.drive("http://www.google.co.jp/", {
+            // 画面が表示されていること
+            assertEquals("Google", title)
+            val element = find(By.name("q"));
+            element.value("Kotlin\n"); // send also a "\n"
+
+            TimeUnit.SECONDS.sleep(10)
+            //Googleのロゴのエレメント
+            val logo = find(By.id("logo"))
+            logo.click()
+
+            // とりあえずのスリープ
+            TimeUnit.SECONDS.sleep(10)
+            browser.report("report")
+        })
+
     }
 
     @Ignore

@@ -3,6 +3,8 @@ package kebab.core
 import kebab.NavigatorFactory
 import kebab.configuration.Configuration
 import kebab.configuration.ConfigurationLoader
+import kebab.report.ReportState
+import java.io.File
 import java.net.URI
 import java.net.URL
 import java.net.URLEncoder
@@ -119,6 +121,21 @@ class Browser(val config: Configuration) {
      */
     fun quit() {
         config.driver.quit()
+    }
+
+    /**
+     * Writes a snapshot of the browser's state to the current {@link #getReportGroupDir()} using
+     * the {@link geb.Configuration#getReporter() config's reporter}.
+     *
+     * @param label The name for the report file (should not include a file extension)
+     */
+    fun report(label : String) {
+        config.reporter.writeReport(ReportState(this, label, getReportGroupDir()))
+    }
+
+    // TODO
+    private fun  getReportGroupDir(): File {
+        return File("")
     }
 }
 

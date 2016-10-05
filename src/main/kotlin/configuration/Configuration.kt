@@ -5,6 +5,9 @@ import kebab.DefaultInnerNavigatorFactory
 import kebab.NavigatorFactory
 import kebab.core.Browser
 import kebab.exception.InvalidKebabConfiguration
+import kebab.report.CompositeReporter
+import kebab.report.PageSourceReporter
+import kebab.report.ScreenshotReporter
 import kebab.support.waiting.WaitingSupport
 import org.openqa.selenium.WebDriver
 import java.util.*
@@ -22,6 +25,10 @@ class Configuration() {
     lateinit var driver: WebDriver
 
     lateinit var options: ConfigOptions
+
+
+    // TODO
+    val  reporter = CompositeReporter(PageSourceReporter(), ScreenshotReporter())
 
     fun options(init: ConfigOptions.() -> Unit) {
         val options = ConfigOptions()
@@ -55,5 +62,7 @@ class Configuration() {
 
     private fun readValue(key: String, browser: Browser, defaultValue: NavigatorFactory?): NavigatorFactory? =
             rawConfig.get(key) ?: defaultValue
+
+
 
 }
