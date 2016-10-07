@@ -7,6 +7,7 @@ import kebab.core.Browser
 import kebab.exception.InvalidKebabConfiguration
 import kebab.report.CompositeReporter
 import kebab.report.PageSourceReporter
+import kebab.report.Reporter
 import kebab.report.ScreenshotReporter
 import kebab.support.waiting.WaitingSupport
 import org.openqa.selenium.WebDriver
@@ -28,7 +29,7 @@ class Configuration() {
 
 
     // TODO
-    val  reporter = CompositeReporter(PageSourceReporter(), ScreenshotReporter())
+    val  reporter = CompositeReporter(listOf<Reporter>(PageSourceReporter(), ScreenshotReporter()))
 
     fun options(init: ConfigOptions.() -> Unit) {
         val options = ConfigOptions()
