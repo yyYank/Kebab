@@ -52,11 +52,11 @@ class KebabTest {
             val element = find(By.name("q"));
             element.value("Kotlin\n"); // send also a "\n"
             // とりあえずのスリープ
-            TimeUnit.SECONDS.sleep(10)
+            TimeUnit.SECONDS.sleep(2)
         })
     }
 
-    @Ignore
+//    @Ignore
     @Test
     fun Googleで検索してみたあとリンクをクリックするよ() {
         browser.drive("http://www.google.co.jp/", {
@@ -65,13 +65,13 @@ class KebabTest {
             val element = find(By.name("q"));
             element.value("Kotlin\n"); // send also a "\n"
 
-            TimeUnit.SECONDS.sleep(10)
+            TimeUnit.SECONDS.sleep(2)
             //Googleのロゴのエレメント
             val logo = find(By.id("logo"))
             logo.click()
 
             // とりあえずのスリープ
-            TimeUnit.SECONDS.sleep(10)
+            TimeUnit.SECONDS.sleep(2)
         })
     }
 
@@ -97,13 +97,13 @@ class KebabTest {
             val element = find(By.name("q"));
             element.value("Kotlin\n"); // send also a "\n"
 
-            TimeUnit.SECONDS.sleep(10)
+            TimeUnit.SECONDS.sleep(2)
             //Googleのロゴのエレメント
             val logo = find(By.id("logo"))
             logo.click()
 
             // とりあえずのスリープ
-            TimeUnit.SECONDS.sleep(10)
+            TimeUnit.SECONDS.sleep(2)
             browser.report("report")
         })
 
