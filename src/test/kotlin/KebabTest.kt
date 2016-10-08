@@ -56,7 +56,7 @@ class KebabTest {
         })
     }
 
-//    @Ignore
+    @Ignore
     @Test
     fun Googleで検索してみたあとリンクをクリックするよ() {
         browser.drive("http://www.google.co.jp/", {
