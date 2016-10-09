@@ -7,6 +7,7 @@ import org.junit.*
 import org.junit.Assert.assertEquals
 import org.openqa.selenium.By
 import org.openqa.selenium.chrome.ChromeDriver
+import java.io.File
 import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
@@ -19,6 +20,8 @@ class KebabTest {
             baseUrl = "http://www.google.co.jp/"
 
             driver = ChromeDriver()
+
+            reportDir = File("/Users/yy_yank")
 
             options {
                 timeout {

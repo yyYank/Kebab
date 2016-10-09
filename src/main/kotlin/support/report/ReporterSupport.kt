@@ -23,9 +23,8 @@ abstract class ReporterSupport : Reporter {
     /**
      * Replaces all non word chars with underscores to avoid using reserved characters in file paths
      */
-    fun escapeFileName(name : String) {
-        name.replace(Regex("(?U)[^\\w\\s-]"), "_")
-    }
+    fun escapeFileName(name : String) = name.replace(Regex("(?U)[^\\w\\s-]"), "_")
+
 
     override fun addListener(listener : ReportingListener) {
         if (!listeners.contains(listener)) {

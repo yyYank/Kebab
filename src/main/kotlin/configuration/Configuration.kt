@@ -11,6 +11,7 @@ import kebab.report.Reporter
 import kebab.report.ScreenshotReporter
 import kebab.support.waiting.WaitingSupport
 import org.openqa.selenium.WebDriver
+import java.io.File
 import java.util.*
 
 fun configuration(init: Configuration.() -> Unit): Configuration {
@@ -26,6 +27,8 @@ class Configuration() {
     lateinit var driver: WebDriver
 
     lateinit var options: ConfigOptions
+
+    lateinit var reportDir: File
 
 
     // TODO

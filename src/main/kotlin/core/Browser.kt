@@ -28,10 +28,13 @@ class Browser(val config: Configuration) {
     var reportGroup: String? = null
     // ナビゲータのファクトリ。ナビゲータはページのナビゲートをするんだろな
     val navigatorFactory: NavigatorFactory
+    val reportDir : File
 
     init {
+        reportDir = config.reportDir
         navigatorFactory = config.createNavigatorFactory(this)
     }
+
 
     constructor() : this(ConfigurationLoader().conf) {
     }
@@ -133,9 +136,8 @@ class Browser(val config: Configuration) {
         config.reporter.writeReport(ReportState(this, label, getReportGroupDir()))
     }
 
-    // TODO
     private fun  getReportGroupDir(): File {
-        return File("")
+        return reportDir
     }
 }
 
