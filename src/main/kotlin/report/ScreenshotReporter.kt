@@ -45,14 +45,10 @@ class ScreenshotReporter : ReporterSupport() {
     }
 
 
-    fun determineScreenshotDriver(browser: Browser): TakesScreenshot? {
-        return if (browser.config.driver is TakesScreenshot) {
-            browser.config.driver as TakesScreenshot
-//        } else if (browser.config.augmentedDriver is TakesScreenshot) {
-//            browser.config.augmentedDriver as TakesScreenshot
-        } else {
-            null
-        }
+    fun determineScreenshotDriver(browser: Browser): TakesScreenshot? = if (browser.config.driver is TakesScreenshot) {
+        browser.config.driver as TakesScreenshot
+    } else {
+        null
     }
 }
 

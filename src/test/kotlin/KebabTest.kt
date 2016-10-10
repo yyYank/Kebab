@@ -80,12 +80,6 @@ class KebabTest {
 
     @Ignore
     @Test
-    fun 何かボタンをクリックするよ() {
-        Assert.fail("未実装")
-    }
-
-    @Ignore
-    @Test
     fun 画面のレンダリングをウエイトするよ() {
         Assert.fail("未実装")
     }
