@@ -23,6 +23,10 @@ class KebabTest {
 
             reportDir = File("/Users/yy_yank")
 
+            interval = 5
+
+
+
             options {
                 timeout {
                     implicitlyWait = 10L to TimeUnit.SECONDS
@@ -81,7 +85,11 @@ class KebabTest {
     @Ignore
     @Test
     fun 画面のレンダリングをウエイトするよ() {
-        Assert.fail("未実装")
+//        Assert.fail("未実装")
+        browser.drive("http://www.google.co.jp/", {
+            val element = find(By.name("q"));
+            waitFor{element.text() === ""}
+        })
     }
 
 

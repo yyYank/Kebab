@@ -30,8 +30,11 @@ class Browser(val config: Configuration) {
     val navigatorFactory: NavigatorFactory
     val reportDir : File
 
+    val interval : Long
+
     init {
         reportDir = config.reportDir
+        interval = config.interval
         navigatorFactory = config.createNavigatorFactory(this)
     }
 

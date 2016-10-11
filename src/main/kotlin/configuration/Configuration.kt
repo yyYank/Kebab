@@ -12,6 +12,7 @@ import kebab.report.ScreenshotReporter
 import kebab.support.waiting.WaitingSupport
 import org.openqa.selenium.WebDriver
 import java.io.File
+import java.math.BigDecimal
 import java.util.*
 
 fun configuration(init: Configuration.() -> Unit): Configuration {
@@ -30,8 +31,8 @@ class Configuration() {
 
     lateinit var reportDir: File
 
+    lateinit var  interval: BigDecimal
 
-    // TODO
     val  reporter = CompositeReporter(listOf<Reporter>(PageSourceReporter(), ScreenshotReporter()))
 
     fun options(init: ConfigOptions.() -> Unit) {

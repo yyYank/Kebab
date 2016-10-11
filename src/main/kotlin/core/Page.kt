@@ -104,9 +104,8 @@ class Page : Navigatable, PageContentContainer, Initializable, WaitingSupport {
         throw UnsupportedOperationException()
     }
 
-    override fun <T> waitFor(f: () -> T): T {
-        throw UnsupportedOperationException()
-    }
+    override fun <T> waitFor(f: () -> T): T = waitingSupport.waitFor(f)
+
 
     override fun <T> waitFor(params: Map<String, Any>, f: () -> T): T {
         throw UnsupportedOperationException()
