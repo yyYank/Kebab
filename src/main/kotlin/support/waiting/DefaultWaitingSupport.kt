@@ -11,7 +11,7 @@ class DefaultWaitingSupport(val config: Configuration) : WaitingSupport {
         throw UnsupportedOperationException()
     }
 
-    override fun <T> waitFor(f: () -> T): T = doWaitFor(wait = WebDriverWait(config.driver, config.interval), block = f)
+    override fun <T> waitFor(f: () -> T): T = doWaitFor(wait = WebDriverWait(config.driver, config.interval.toLong()), block = f)
 
     override fun <T> waitFor(params: Map<String, Any>, f: () -> T): T {
         throw UnsupportedOperationException()

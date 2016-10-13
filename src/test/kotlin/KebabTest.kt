@@ -8,6 +8,7 @@ import org.junit.Assert.assertEquals
 import org.openqa.selenium.By
 import org.openqa.selenium.chrome.ChromeDriver
 import java.io.File
+import java.math.BigDecimal
 import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
@@ -23,7 +24,7 @@ class KebabTest {
 
             reportDir = File("/Users/yy_yank")
 
-            interval = 5
+            interval = BigDecimal(5)
 
 
 
@@ -86,6 +87,9 @@ class KebabTest {
     @Test
     fun 画面のレンダリングをウエイトするよ() {
 //        Assert.fail("未実装")
+        // https://github.com/geb/geb/blob/master/module/geb-waiting/src/main/groovy/geb/waiting/Wait.groovy
+        // https://github.com/geb/geb/blob/master/module/geb-core/src/main/groovy/geb/waiting/WaitingSupport.groovy
+        // https://github.com/geb/geb/blob/master/module/geb-core/src/main/groovy/geb/waiting/DefaultWaitingSupport.groovy
         browser.drive("http://www.google.co.jp/", {
             val element = find(By.name("q"));
             waitFor{element.text() === ""}

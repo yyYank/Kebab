@@ -5,6 +5,7 @@ import kebab.configuration.Configuration
 import kebab.configuration.ConfigurationLoader
 import kebab.report.ReportState
 import java.io.File
+import java.math.BigDecimal
 import java.net.URI
 import java.net.URL
 import java.net.URLEncoder
@@ -30,7 +31,7 @@ class Browser(val config: Configuration) {
     val navigatorFactory: NavigatorFactory
     val reportDir : File
 
-    val interval : Long
+    val interval : BigDecimal
 
     init {
         reportDir = config.reportDir
