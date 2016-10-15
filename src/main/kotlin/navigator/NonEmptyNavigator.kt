@@ -72,9 +72,7 @@ class NonEmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, l
         throw UnsupportedOperationException()
     }
 
-    override fun text(): String {
-        throw UnsupportedOperationException()
-    }
+    override fun text(): String = elements.filter { it.isDisplayed }.first().text
 
     override fun getAttribute(name: String): String {
         throw UnsupportedOperationException()
