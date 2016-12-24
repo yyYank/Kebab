@@ -18,6 +18,7 @@ class EmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, loca
     override fun value(s: String): Navigator {
         throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
     override fun getAt(index: Int): Navigator {
         throw UnsupportedOperationException()
     }

@@ -5,7 +5,7 @@ import java.io.File
 /**
  * Created by yy_yank on 2016/10/05.
  */
-interface ReportingListener{
+interface ReportingListener {
 
     /**
      * Called when a report is taken.
@@ -14,5 +14,5 @@ interface ReportingListener{
      * @param reportState Information about what was reported on.
      * @param reportFiles The report files that the reporter created.
      */
-    fun onReport(reporter : Reporter, reportState : ReportState, eportFiles : List<File>)
+    fun onReport(reporter: Reporter, reportState: ReportState, eportFiles: List<File>)
 }

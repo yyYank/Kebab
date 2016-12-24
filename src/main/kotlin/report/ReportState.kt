@@ -6,4 +6,4 @@ import java.io.File
 /**
  * Created by yy_yank on 2016/10/05.
  */
-class ReportState(val browser : Browser, val label : String, val outputDir : File)
+class ReportState(val browser: Browser, val label: String, val outputDir: File)

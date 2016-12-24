@@ -31,9 +31,9 @@ class Configuration() {
 
     lateinit var reportDir: File
 
-    lateinit var  interval: BigDecimal
+    lateinit var interval: BigDecimal
 
-    val  reporter = CompositeReporter(listOf<Reporter>(PageSourceReporter(), ScreenshotReporter()))
+    val reporter = CompositeReporter(listOf<Reporter>(PageSourceReporter(), ScreenshotReporter()))
 
     fun options(init: ConfigOptions.() -> Unit) {
         val options = ConfigOptions()
@@ -67,7 +67,6 @@ class Configuration() {
 
     private fun readValue(key: String, browser: Browser, defaultValue: NavigatorFactory?): NavigatorFactory? =
             rawConfig.get(key) ?: defaultValue
-
 
 
 }

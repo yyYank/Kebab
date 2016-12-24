@@ -29,9 +29,9 @@ class Browser(val config: Configuration) {
     var reportGroup: String? = null
     // ナビゲータのファクトリ。ナビゲータはページのナビゲートをするんだろな
     val navigatorFactory: NavigatorFactory
-    val reportDir : File
+    val reportDir: File
 
-    val interval : BigDecimal
+    val interval: BigDecimal
 
     init {
         reportDir = config.reportDir
@@ -136,11 +136,11 @@ class Browser(val config: Configuration) {
      *
      * @param label The name for the report file (should not include a file extension)
      */
-    fun report(label : String) {
+    fun report(label: String) {
         config.reporter.writeReport(ReportState(this, label, getReportGroupDir()))
     }
 
-    private fun  getReportGroupDir(): File {
+    private fun getReportGroupDir(): File {
         return reportDir
     }
 }

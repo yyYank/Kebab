@@ -92,7 +92,7 @@ class KebabTest {
         // https://github.com/geb/geb/blob/master/module/geb-core/src/main/groovy/geb/waiting/DefaultWaitingSupport.groovy
         browser.drive("http://www.google.co.jp/", {
             val element = find(By.name("q"));
-            waitFor{element.text() === ""}
+            waitFor { element.text() === "" }
         })
     }
 

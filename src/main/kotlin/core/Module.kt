@@ -14,9 +14,9 @@ import kotlin.properties.Delegates
  */
 class Module {
 
-    var navigator : Navigator by Delegates.notNull()
+    var navigator: Navigator by Delegates.notNull()
 
-    fun init (browser : Browser, navigatorFactory : NavigatorFactory) {
+    fun init(browser: Browser, navigatorFactory: NavigatorFactory) {
         navigator = navigatorFactory.getBase()!!
         // val contentTemplates : MutableMap<String, PageContentTemplate> = PageContentTemplateBuilder.build(browser, this, navigatorFactory, "content", this.class, Module.java)
         // val pageContentSupport = DefaultPageContentSupport(this, contentTemplates, navigatorFactory, navigator)
@@ -34,15 +34,15 @@ class Module {
     }
 
     @JvmOverloads
-    fun click(potentialPages : List<Page>, wait : Wait<Any>) = navigator.click(potentialPages, wait)
+    fun click(potentialPages: List<Page>, wait: Wait<Any>) = navigator.click(potentialPages, wait)
 
     @JvmOverloads
-    fun click(pageInstance : Page, wait : Wait<Any>)  = navigator.click(pageInstance, wait)
+    fun click(pageInstance: Page, wait: Wait<Any>) = navigator.click(pageInstance, wait)
 
     @JvmOverloads
-    fun click(pageClass : Class<out Page>, wait : Wait<Any>) = navigator.click(pageClass, wait)
+    fun click(pageClass: Class<out Page>, wait: Wait<Any>) = navigator.click(pageClass, wait)
 
     @JvmOverloads
-    fun click() : Navigator = navigator.click()
+    fun click(): Navigator = navigator.click()
 
 }

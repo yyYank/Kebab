@@ -41,6 +41,7 @@ class DefaultLocator(val locator: SearchContextBasedBasicLocator) : Locator {
     override fun find(attributes: MutableMap<String, Any>, selector: String, index: Int): Navigator {
         throw UnsupportedOperationException()
     }
+
     override fun find(attributes: MutableMap<String, Any>, selector: String, range: ClosedRange<Int>): Navigator {
         throw UnsupportedOperationException()
     }

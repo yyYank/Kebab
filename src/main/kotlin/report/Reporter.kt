@@ -8,7 +8,7 @@ interface Reporter {
      * Takes a snapshot of the given browser's state, using the given name
      * as the base name for anything (e.g. file) that is produced.
      */
-    fun writeReport( reportState : ReportState)
+    fun writeReport(reportState: ReportState)
 
     /**
      * Registers an object to be notified when a report is taken.
@@ -17,5 +17,5 @@ interface Reporter {
      *
      * @param listener
      */
-    fun addListener( listener : ReportingListener)
+    fun addListener(listener: ReportingListener)
 }

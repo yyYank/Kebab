@@ -106,6 +106,6 @@ interface Navigator : Iterable<Navigator>, Locator {
 
     fun getAt(range: ClosedRange<Int>): Navigator
 
-    fun  value(s: String) : Navigator
+    fun value(s: String): Navigator
 
 }

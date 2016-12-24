@@ -57,8 +57,6 @@ class Page : Navigatable, PageContentContainer, Initializable, WaitingSupport {
     var interactionsSupport: InteractionsSupport = UninitializedInteractionSupport(this)
 
 
-
-
     /**
      * Initialises this page instance, connecting it to the browser.
      * <p>
@@ -79,8 +77,8 @@ class Page : Navigatable, PageContentContainer, Initializable, WaitingSupport {
     }
 
     fun find() = navigableSupport.find()
-    fun find(index : Int) = navigableSupport.find(index)
-    fun find(range : ClosedRange<Int>) = navigableSupport.find(range)
+    fun find(index: Int) = navigableSupport.find(index)
+    fun find(range: ClosedRange<Int>) = navigableSupport.find(range)
     fun find(selector: String) = navigableSupport.find(selector)
     fun find(selector: String, index: Int) = navigableSupport.find(selector, index)
     fun find(selector: String, range: ClosedRange<Int>) = navigableSupport.find(selector, range)
@@ -126,7 +124,8 @@ class Page : Navigatable, PageContentContainer, Initializable, WaitingSupport {
     override fun <T> waitFor(params: Map<String, Any>, timeout: Double, interval: Double, f: () -> T): T {
         throw UnsupportedOperationException()
     }
+
     fun getJs() = Any()
 }
 
-interface Initializable{}
+interface Initializable {}

@@ -37,7 +37,7 @@ class DefaultWaitingSupport(val config: Configuration) : WaitingSupport {
         throw UnsupportedOperationException()
     }
 
-    private fun <T> doWaitFor(customMessage : String = "", wait : WebDriverWait, block : () -> T) : T {
+    private fun <T> doWaitFor(customMessage: String = "", wait: WebDriverWait, block: () -> T): T {
 //        wait.customMessage = customMessage
 //        return wait.until {  }
         // TODO

@@ -114,6 +114,6 @@ class NonEmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, l
         throw UnsupportedOperationException()
     }
 
-    override fun iterator(): Iterator<Navigator>  = this.iterator()
+    override fun iterator(): Iterator<Navigator> = this.iterator()
 
 }

@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 
 class ConfigOptions {
 
-    private var timeout:Timeout? = null
+    private var timeout: Timeout? = null
 
     fun timeout(init: Timeout.() -> Unit) {
         val t = Timeout()
