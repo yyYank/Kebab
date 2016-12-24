@@ -87,9 +87,9 @@ class KebabTest {
     @Test
     fun 画面のレンダリングをウエイトするよ() {
 //        Assert.fail("未実装")
-        // https://github.com/kebab/kebab/blob/master/module/kebab-waiting/src/main/groovy/kebab/waiting/Wait.groovy
-        // https://github.com/kebab/kebab/blob/master/module/kebab-core/src/main/groovy/kebab/waiting/WaitingSupport.groovy
-        // https://github.com/kebab/kebab/blob/master/module/kebab-core/src/main/groovy/kebab/waiting/DefaultWaitingSupport.groovy
+        // https://github.com/geb/geb/blob/master/module/geb-waiting/src/main/groovy/geb/waiting/Wait.groovy
+        // https://github.com/geb/geb/blob/master/module/geb-core/src/main/groovy/geb/waiting/WaitingSupport.groovy
+        // https://github.com/geb/geb/blob/master/module/geb-core/src/main/groovy/geb/waiting/DefaultWaitingSupport.groovy
         browser.drive("http://www.google.co.jp/", {
             val element = find(By.name("q"));
             waitFor { element.text() === "" }
