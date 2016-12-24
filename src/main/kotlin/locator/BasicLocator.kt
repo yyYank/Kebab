@@ -7,7 +7,7 @@ import org.openqa.selenium.By
  * Created by yy_yank on 2016/10/03.
  */
 /**
- * Defines element search operations that are sufficient to be able to implement a {@link geb.navigator.Locator} on top of.
+ * Defines element search operations that are sufficient to be able to implement a {@link kebab.navigator.Locator} on top of.
  */
 interface BasicLocator {
 

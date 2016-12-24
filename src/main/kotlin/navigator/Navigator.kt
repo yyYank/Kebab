@@ -88,7 +88,7 @@ interface Navigator : Iterable<Navigator>, Locator {
     /**
      * Clicks on the first context element, finds the first page from the list for which the at checker is defined and sets it as the current page.
      *
-     * @param potentialPages a list of classes extending {@link geb.Page} or a list of instances of such classes
+     * @param potentialPages a list of classes extending {@link kebab.Page} or a list of instances of such classes
      * @return this
      */
     fun click(potentialPages: List<out Page>): Navigator
@@ -96,7 +96,7 @@ interface Navigator : Iterable<Navigator>, Locator {
     /**
      * Clicks on the first context element, finds the first page from the list for which the at checker is defined and sets it as the current page.
      *
-     * @param potentialPages a list of classes extending {@link geb.Page} or a list of instances of such classes
+     * @param potentialPages a list of classes extending {@link kebab.Page} or a list of instances of such classes
      * @param wait configuration to be used for waiting for the at checkers to succeed
      * @return this
      */

@@ -132,7 +132,7 @@ class Browser(val config: Configuration) {
 
     /**
      * Writes a snapshot of the browser's state to the current {@link #getReportGroupDir()} using
-     * the {@link geb.Configuration#getReporter() config's reporter}.
+     * the {@link kebab.Configuration#getReporter() config's reporter}.
      *
      * @param label The name for the report file (should not include a file extension)
      */
