@@ -6,34 +6,34 @@ package kebab.support.alert
 interface AlertAndConfirmSupport {
 
     // tag::alert[]
-    fun withAlert(actions : () -> Unit)
+    fun withAlert(actions: () -> Unit)
     // end::alert[]
 
     // tag::alert[]
-    fun <K,V> withAlert(params : Map<K ,V>, actions : () -> Unit)
+    fun <K, V> withAlert(params: Map<K, V>, actions: () -> Unit)
     // end::alert[]
 
     // tag::alert[]
-    fun withNoAlert(actions : () -> Unit) : Unit
+    fun withNoAlert(actions: () -> Unit): Unit
     // end::alert[]
 
     // tag::confirm[]
-    fun withConfirm(ok : Boolean, actions : () -> Unit)
+    fun withConfirm(ok: Boolean, actions: () -> Unit)
     // end::confirm[]
 
     // tag::confirm[]
-    fun withConfirm(actions : () -> Unit)
+    fun withConfirm(actions: () -> Unit)
     // end::confirm[]
 
     // tag::confirm[]
-    fun <K, V>withConfirm(params : Map<K, V>, actions : () -> Unit)
+    fun <K, V> withConfirm(params: Map<K, V>, actions: () -> Unit)
     // end::confirm[]
 
     // tag::confirm[]
-    fun <K, V>withConfirm(params : Map<K, V>,  ok : Boolean, actions : () -> Unit)
+    fun <K, V> withConfirm(params: Map<K, V>, ok: Boolean, actions: () -> Unit)
     // end::confirm[]
 
     // tag::confirm[]
-    fun withNoConfirm(actions : () -> Unit)
+    fun withNoConfirm(actions: () -> Unit)
     // end::confirm[]
 }

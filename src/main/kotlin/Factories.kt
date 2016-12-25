@@ -3,10 +3,13 @@ package kebab
 import kebab.core.Browser
 import kebab.core.PageContentTemplate
 import kebab.locator.DefaultLocator
-import kebab.navigator.*
 import kebab.locator.EmptyLocator
 import kebab.locator.Locator
 import kebab.locator.SearchContextBasedBasicLocator
+import kebab.navigator.EmptyNavigator
+import kebab.navigator.Navigate
+import kebab.navigator.Navigator
+import kebab.navigator.NonEmptyNavigator
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
 import java.util.*

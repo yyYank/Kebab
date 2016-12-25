@@ -1,6 +1,7 @@
 package kebab.core
 
-import kebab.navigator.*
+import js.JavascriptInterface
+import kebab.navigator.Navigable
 import kebab.support.alert.AlertAndConfirmSupport
 import kebab.support.alert.DefaultAlertAndConfirmSupport
 import kebab.support.alert.UninitializedAlertAndConfirmSupport
@@ -125,7 +126,7 @@ class Page : Navigatable, PageContentContainer, Initializable, WaitingSupport {
         throw UnsupportedOperationException()
     }
 
-    fun getJs() = Any()
+    fun getJs() = JavascriptInterface(this.browser)
 }
 
 interface Initializable {}

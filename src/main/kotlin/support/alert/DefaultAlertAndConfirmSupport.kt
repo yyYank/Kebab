@@ -1,5 +1,6 @@
 package kebab.support.alert
 
+import js.JavascriptInterface
 import kebab.configuration.Configuration
 
 /**
@@ -11,8 +12,7 @@ class DefaultAlertAndConfirmSupport(val javascriptInterfaceFactory: () -> Javasc
     private val UNKNOWN = -1
 
 
-
-    private  fun getJavascriptInterface() : JavascriptInterface {
+    private fun getJavascriptInterface(): JavascriptInterface {
         val js = javascriptInterfaceFactory()
         return js
     }
@@ -52,6 +52,4 @@ class DefaultAlertAndConfirmSupport(val javascriptInterfaceFactory: () -> Javasc
 
 }
 
-class JavascriptInterface {
 
-}

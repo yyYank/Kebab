@@ -1,6 +1,5 @@
 package kebab.navigator
 
-import kebab.navigator.Navigator
 import kebab.locator.Locator
 
 

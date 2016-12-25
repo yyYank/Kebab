@@ -1,10 +1,7 @@
 package kebab.locator
 
-import kebab.BrowserBackedNavigatorFactory
-import kebab.function.ByFunction
 import kebab.navigator.Navigator
 import org.openqa.selenium.By
-import org.openqa.selenium.WebDriver
 
 
 val MATCH_ALL_SELECTOR = "*"

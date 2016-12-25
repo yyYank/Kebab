@@ -1,12 +1,9 @@
 package kebab.navigator
 
-import kebab.core.Browser
 import kebab.core.Page
 import kebab.locator.Locator
 import org.openqa.selenium.By
-import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.Wait
-import java.util.*
 
 /**
  * Navigator.エレメントの基本操作を行う。
