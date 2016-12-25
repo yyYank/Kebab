@@ -14,3 +14,7 @@ class InvalidKebabConfiguration(message: String?) : RuntimeException(message) {
 class RequiredPageValueNotPresent(pageContentTemplate: PageContentTemplate, args: Array<Any>) : Throwable() {
 
 }
+
+class GebException(s: String) : Throwable() {
+
+}
