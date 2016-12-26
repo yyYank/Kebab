@@ -35,7 +35,7 @@ class BrowserBackedNavigatorFactory(browser: Browser, innerNavigatorFactory: Inn
     val locator = DefaultLocator(SearchContextBasedBasicLocator(browser.config.driver, this))
     val baseTagName = "html"
 
-    open override fun createFromNavigators(navigators: Iterable<Navigate>): Navigator {
+    override fun createFromNavigators(navigators: Iterable<Navigate>): Navigator {
         throw UnsupportedOperationException()
     }
 
@@ -44,27 +44,15 @@ class BrowserBackedNavigatorFactory(browser: Browser, innerNavigatorFactory: Inn
             createFromWebElements(Collections.singletonList(browser.config.driver.findElement(By.tagName(baseTagName))))
 
 
-    override fun getBase(): Navigator? {
-        val baseNavigatorWaiting = browser.config.baseNavigatorWaiting
-        if (baseNavigatorWaiting == null) {
-            baseNavigatorWaiting.waitFor { createBase() }
-        } else {
-            return createBase()
-        }
-        return null
-    }
+    override fun getBase(): Navigator? = createBase()
 }
 
 
-open abstract class AbstractNavigatorFactory(val browser: Browser, override val innerNavigatorFactory: InnerNavigatorFactory) : NavigatorFactory {
+abstract class AbstractNavigatorFactory(val browser: Browser, override val innerNavigatorFactory: InnerNavigatorFactory) : NavigatorFactory {
 
     override fun createFromWebElements(elements: Iterable<WebElement>): Navigator? {
         val filtered = ArrayList<WebElement>()
-        elements.asSequence().forEach {
-            if (it != null) {
-                filtered.add(it)
-            }
-        }
+        elements.asSequence().forEach { filtered.add(it) }
         return innerNavigatorFactory.createNavigator(browser, filtered)
     }
 

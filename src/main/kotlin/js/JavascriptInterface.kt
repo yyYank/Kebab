@@ -9,7 +9,7 @@ import org.openqa.selenium.JavascriptExecutor
  */
 class JavascriptInterface(val browser: Browser?) {
 
-    private fun execjs(script: String, args: List<Any>?) {
+    private fun execjs(script: String, args: List<JavascriptExecutor>?) {
         val driver = browser?.config?.driver
 
 
@@ -25,17 +25,17 @@ class JavascriptInterface(val browser: Browser?) {
         execjs("return $name;", null)
     }
 
-    fun methodMissing(name: String, args: List<String>) {
+    fun methodMissing(name: String, args: List<JavascriptExecutor>) {
         execjs("return ${name}.apply(window, arguments)", args)
     }
 
-    fun exec(args: Array<Any>) {
-        if (args.size == 0) {
+    fun exec(args: Array<JavascriptExecutor>) {
+        if (args.isEmpty()) {
             throw IllegalArgumentException("there must be a least one argument")
         }
 
         val (script, jsArgs) = if (args.size == 1) {
-            val jsArgs = arrayListOf<Any>()
+            val jsArgs = arrayListOf<JavascriptExecutor>()
             Pair(args[0], jsArgs)
         } else {
             val jsArgs = args.dropLast(args.size - 2)
