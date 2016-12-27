@@ -29,17 +29,13 @@ class JavascriptInterface(val browser: Browser?) {
         execjs("return ${name}.apply(window, arguments)", args)
     }
 
-    fun exec(args: Array<JavascriptExecutor>) {
-        if (args.isEmpty()) {
-            throw IllegalArgumentException("there must be a least one argument")
-        }
-
-        val (script, jsArgs) = if (args.size == 1) {
+    fun exec(args: Pair<String, Array<JavascriptExecutor>>) {
+        val (script, jsArgs) = if (args.second.size == 1) {
             val jsArgs = arrayListOf<JavascriptExecutor>()
-            Pair(args[0], jsArgs)
+            Pair(args.second[0], jsArgs)
         } else {
-            val jsArgs = args.dropLast(args.size - 2)
-            Pair(args.last(), jsArgs)
+            val jsArgs = args.second.dropLast(args.second.size - 2)
+            Pair(args.first, jsArgs)
         }
 
         if (!(script is CharSequence)) {
