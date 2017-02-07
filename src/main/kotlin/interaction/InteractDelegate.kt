@@ -29,8 +29,7 @@ class InteractDelegate(driver : WebDriver){
      * @see Actions#keyDown(org.openqa.selenium.WebElement, org.openqa.selenium.Keys)
      */
     fun keyDown(navigator : Navigator, theKey : Keys) :InteractDelegate {
-        // TODO singleElementの実装
-//        actions.keyDown(navigator.singleElement(), theKey)
+        actions.keyDown(navigator.singleElement(), theKey)
         return this
     }
 
@@ -46,8 +45,7 @@ class InteractDelegate(driver : WebDriver){
      * @see Actions#keyUp(org.openqa.selenium.WebElement, org.openqa.selenium.Keys)
      */
     fun keyUp(navigator : Navigator, theKey : Keys) : InteractDelegate{
-        // TODO singleElementの実装
-//        actions.keyUp(navigator.singleElement(), theKey)
+        actions.keyUp(navigator.singleElement(), theKey)
         return this
     }
 
@@ -63,8 +61,7 @@ class InteractDelegate(driver : WebDriver){
      * @see Actions#sendKeys(org.openqa.selenium.WebElement, java.lang.CharSequence ...)
      */
      fun sendKeys(navigator : Navigator, vararg keysToSend : CharSequence) : InteractDelegate {
-        // TODO singleElement
-//        actions.sendKeys(navigator.singleElement(), keysToSend)
+        actions.sendKeys(navigator.singleElement(), *keysToSend)
         return this
     }
 
@@ -72,8 +69,7 @@ class InteractDelegate(driver : WebDriver){
      * @see Actions#clickAndHold(org.openqa.selenium.WebElement)
      */
     fun clickAndHold(navigator : Navigator) : InteractDelegate {
-        // TODO singleElement
-//        actions.clickAndHold(navigator.singleElement())
+        actions.clickAndHold(navigator.singleElement())
         return this
     }
 
@@ -89,8 +85,7 @@ class InteractDelegate(driver : WebDriver){
      * @see Actions#release(org.openqa.selenium.WebElement)
      */
     fun release(navigator : Navigator) :InteractDelegate{
-        // TODO singleElement
-//        actions.release(navigator.singleElement())
+        actions.release(navigator.singleElement())
         return this
     }
 
@@ -123,8 +118,7 @@ class InteractDelegate(driver : WebDriver){
      * @see Actions#doubleClick(org.openqa.selenium.WebElement)
      */
     fun doubleClick(navigator : Navigator) : InteractDelegate{
-        // TODO singleEleemnt
-//        actions.doubleClick(navigator.singleElement())
+        actions.doubleClick(navigator.singleElement())
         return this
     }
 
@@ -140,8 +134,7 @@ class InteractDelegate(driver : WebDriver){
      * @see Actions#moveToElement(org.openqa.selenium.WebElement)
      */
     fun moveToElement(navigator : Navigator) : InteractDelegate{
-        // TODO singleElement
-//        actions.moveToElement(navigator.singleElement())
+        actions.moveToElement(navigator.singleElement())
         return this
     }
 
@@ -149,8 +142,7 @@ class InteractDelegate(driver : WebDriver){
      * @see Actions#moveToElement(org.openqa.selenium.WebElement, int, int)
      */
     fun movetoelement(navigator : Navigator, xOffset : Int, yOffset : Int) :InteractDelegate {
-        // TODO singleElement
-//        actions.moveToElement(navigator.singleElement(), xOffset, yOffset)
+        actions.moveToElement(navigator.singleElement(), xOffset, yOffset)
         return this
     }
 
@@ -166,8 +158,7 @@ class InteractDelegate(driver : WebDriver){
      * @see Actions#contextClick(org.openqa.selenium.WebElement)
      */
     fun contextClick(navigator : Navigator) : InteractDelegate {
-        // TODO singleElement
-//        actions.contextClick(navigator.singleElement())
+        actions.contextClick(navigator.singleElement())
         return this
     }
 
@@ -183,8 +174,7 @@ class InteractDelegate(driver : WebDriver){
      * @see Actions#dragAndDrop(org.openqa.selenium.WebElement, org.openqa.selenium.WebElement)
      */
     fun dragAndDrop(source : Navigator, target : Navigator) : InteractDelegate {
-        // TODO singleElement
-//        actions.dragAndDrop(source.singleElement(), target.singleElement())
+        actions.dragAndDrop(source.singleElement(), target.singleElement())
         return this
     }
 
@@ -192,8 +182,7 @@ class InteractDelegate(driver : WebDriver){
      * @see Actions#dragAndDropBy(org.openqa.selenium.WebElement, int, int)
      */
     fun dragAndDropBy(source : Navigator, xOffset: Int, yOffset : Int): InteractDelegate {
-        // TODO singleEleemnt
-//        actions.dragAndDropBy(source.singleElement(), xOffset, yOffset)
+        actions.dragAndDropBy(source.singleElement(), xOffset, yOffset)
         return this
     }
 

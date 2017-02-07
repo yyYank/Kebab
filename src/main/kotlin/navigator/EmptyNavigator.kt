@@ -15,6 +15,10 @@ import java.util.*
  * 実装のないNavigator.呼び出すとUnsupportedOperationException
  */
 class EmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, locator: Locator) : AbstractNavigator(browser, locator) {
+    override fun singleElement(): WebElement {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun value(s: String): Navigator {
         throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

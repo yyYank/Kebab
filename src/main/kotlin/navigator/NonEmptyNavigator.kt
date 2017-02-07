@@ -15,6 +15,8 @@ import java.util.*
  * 実装を持つNavigatorクラス.
  */
 class NonEmptyNavigator(browser: Browser, val elements: ArrayList<WebElement>, locator: Locator) : AbstractNavigator(browser, locator) {
+    override fun singleElement(): WebElement = elements.first()
+
 
     /**
      * 現状実装だとfindしたもののうち表示されているものの一番最初のエレメントをにsendする
